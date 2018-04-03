@@ -188,6 +188,7 @@
     <!-- expose-proxy: 开启暴露Aop代理到ThreadLocal支持,即可以通过AopContext.currentProxy()获取当前代理对象 -->
     <aop:aspectj-autoproxy proxy-target-class="true" expose-proxy="true"/>
 
+    <import resource="rest-template.cfg.xml"/>
     <!--<import resource="spring-cache.xml"/>-->
     <!--<import resource="redis-config.xml"/>-->
     <!--<import resource="activiti.cfg.xml"/>-->

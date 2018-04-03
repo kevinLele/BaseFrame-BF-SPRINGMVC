@@ -106,33 +106,26 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      * "status": "success"
      * }
      *
-     * @param jsonStr
+     * @param page
      * @return
      */
     @Override
-    public String getPage(String jsonStr) {
-        return getPage(jsonStr, "getCount", "findByPage");
+    public String getPage(Page page) {
+        return getPage(page, "getCount", "findByPage");
     }
 
-    protected String getPage(String jsonStr, String countFunc, String pageFunc) {
+    protected String getPage(Page page, String countFunc, String pageFunc) {
         JsonViewObject jsonView = new JsonViewObject();
-        Page page;
 
         try {
-            if (!StringUtils.isBlank(jsonStr)) {
-                page = JSON.parseObject(jsonStr, Page.class);
-            } else {
-                page = new Page();
-            }
-
             page = this.getService().findByPage(page, countFunc, pageFunc);
             jsonView.successPack(page);
         } catch (UnauthorizedException unauthorizedException) {
             jsonView.unauthorizedPack();
         } catch (Exception e) {
             jsonView.failPack(e);
-            log.error("BaseRestServiceImpl getPage is error,{jsonStr:"
-                    + jsonStr + ",countFunc:" + countFunc + ",pageFunc:" + pageFunc + "}", e);
+            log.error("BaseRestServiceImpl getPage is error,{Page:"
+                    + JSON.toJSONString(page) + ",countFunc:" + countFunc + ",pageFunc:" + pageFunc + "}", e);
         }
 
         //return JSON.toJSONStringWithDateFormat(jsonView, "yyyy-MM-dd HH:mm:ss", SerializerFeature.WriteMapNullValue);

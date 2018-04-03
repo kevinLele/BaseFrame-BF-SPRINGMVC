@@ -1,39 +1,40 @@
 package com.hq.CloudPlatform.BaseFrame.restful;
 
 import com.hq.CloudPlatform.BaseFrame.exception.ServiceException;
-import com.hq.CloudPlatform.BaseFrame.sys.Constants;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
+import com.hq.CloudPlatform.BaseFrame.restful.view.User;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Created by Administrator on 7/4/2017.
  */
+@RequestMapping("sys")
 public interface ISysRestService {
 
-    @POST
-    @Path("login")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(Constants.MediaType.APPLICATION_JSON)
-    String login(String jsonStr) throws ServiceException;
+    @PostMapping(
+            value = "login",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    String login(User user) throws ServiceException;
 
-    @GET
-    @Path("logout")
-    @Produces(Constants.MediaType.APPLICATION_JSON)
+    @GetMapping(
+            value = "logout",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     String logout() throws ServiceException;
 
-    @GET
-    @Path("getCurrentUserPermissions")
-    @Produces(Constants.MediaType.APPLICATION_JSON)
+    @GetMapping(
+            value = "getCurrentUserPermissions",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     String getCurrentUserPermissions() throws ServiceException;
 
-    @GET
-    @Path("getCurrentUser")
-    @Produces(Constants.MediaType.APPLICATION_JSON)
+    @GetMapping(
+            value = "getCurrentUser",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     String getCurrentUser() throws ServiceException;
 
-    @GET
-    @Path("getCurrentUserPermissionsTree")
-    @Produces(Constants.MediaType.APPLICATION_JSON)
+    @GetMapping(
+            value = "getCurrentUserPermissionsTree",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     String getCurrentUserPermissionsTree() throws ServiceException;
 }

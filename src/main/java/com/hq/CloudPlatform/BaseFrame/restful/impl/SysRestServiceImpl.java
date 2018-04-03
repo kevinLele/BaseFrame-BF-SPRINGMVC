@@ -6,27 +6,31 @@ import com.hq.CloudPlatform.BaseFrame.restful.ISysRestService;
 import com.hq.CloudPlatform.BaseFrame.restful.view.JsonViewObject;
 import com.hq.CloudPlatform.BaseFrame.restful.view.User;
 import com.hq.CloudPlatform.BaseFrame.sys.Constants;
-import com.hq.CloudPlatform.BaseFrame.utils.SysUtils;
+import com.hq.CloudPlatform.BaseFrame.utils.rest.RestUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.Path;
-import javax.ws.rs.client.WebTarget;
 
-@Path("sys")
-@Component
+@RestController
+@Slf4j
 public class SysRestServiceImpl implements ISysRestService {
 
     @Autowired
     @Lazy
     protected HttpServletRequest request;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     /**
      * 此方法只是用于调试登陆
@@ -34,17 +38,14 @@ public class SysRestServiceImpl implements ISysRestService {
      * @return
      */
     @Override
-    public String login(String jsonStr) {
+    public String login(@RequestBody User user) {
         //模拟登陆
-        User user = JSON.parseObject(jsonStr, User.class);
         HttpSession session = request.getSession();
 
-        WebTarget client = SysUtils.getCAWebTarget()
-                .path("/public/user/getByLoginName")
-                .queryParam("loginName", user.getLoginName());
+        JsonViewObject jsonObj = restTemplate.getForObject(
+                RestUtils.getCAServerUrl("/public/user/getByLoginName?loginName={loginName}"),
+                JsonViewObject.class, user.getLoginName());
 
-        String userJsonStr = client.request().get(String.class);
-        JsonViewObject jsonObj = JSON.parseObject(userJsonStr, JsonViewObject.class);
         user = JSON.parseObject(jsonObj.getContentAsStr(), User.class);
         session.setAttribute(Constants.SESSION_KEY_USER, user);
 
@@ -77,11 +78,10 @@ public class SysRestServiceImpl implements ISysRestService {
     public String getCurrentUserPermissions() throws ServiceException {
         User user = (User) request.getSession().getAttribute(Constants.SESSION_KEY_USER);
 
-        WebTarget client = SysUtils.getCAWebTarget()
-                .path("/public/permission/getAllByLoginName")
-                .queryParam("loginName", user.getLoginName());
-
-        return client.request().get(String.class);
+        return restTemplate.getForObject(
+                RestUtils.getCAServerUrl("/public/permission/getAllByLoginName?loginName={loginName}"),
+                String.class,
+                user.getLoginName());
     }
 
     @Override
@@ -100,12 +100,11 @@ public class SysRestServiceImpl implements ISysRestService {
     public String getCurrentUserPermissionsTree() throws ServiceException {
         User user = (User) request.getSession().getAttribute(Constants.SESSION_KEY_USER);
 
-        WebTarget client = SysUtils.getCAWebTarget()
-                .path("/public/permission/getAllForTreeByLoginName")
-                .queryParam("loginName", user.getLoginName())
-                .queryParam("appCode", Constants.APP_CODE);
-
-        return client.request().get(String.class);
+        return restTemplate.getForObject(
+                RestUtils.getCAServerUrl("/public/permission/getAllForTreeByLoginName?loginName={loginName}&appCode={appCode}"),
+                String.class,
+                user.getLoginName(),
+                Constants.APP_CODE);
     }
 
 

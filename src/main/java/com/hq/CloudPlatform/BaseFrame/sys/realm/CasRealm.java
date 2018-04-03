@@ -1,10 +1,9 @@
 package com.hq.CloudPlatform.BaseFrame.sys.realm;
 
-import com.alibaba.fastjson.JSON;
 import com.hq.CloudPlatform.BaseFrame.exception.ServiceException;
 import com.hq.CloudPlatform.BaseFrame.restful.view.User;
 import com.hq.CloudPlatform.BaseFrame.sys.Constants;
-import com.hq.CloudPlatform.BaseFrame.utils.SysUtils;
+import com.hq.CloudPlatform.BaseFrame.utils.rest.RestUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationException;
@@ -14,9 +13,9 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.client.WebTarget;
 import java.util.Set;
 
 /**
@@ -29,9 +28,13 @@ public class CasRealm extends AuthorizingRealm {
     @Lazy
     private HttpServletRequest request;
 
+    @Autowired
+    private RestTemplate restTemplate;
+
     /**
      * 授权操作，决定那些角色可以使用那些资源
      */
+    @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         //null usernames are invalid
         if (principals == null) {
@@ -48,18 +51,21 @@ public class CasRealm extends AuthorizingRealm {
     }
 
     private SimpleAuthorizationInfo getAuthorizationInfo(String username) throws ServiceException {
-        User user = (User)request.getSession().getAttribute(Constants.SESSION_KEY_USER);
+        User user = (User) request.getSession().getAttribute(Constants.SESSION_KEY_USER);
 
-        WebTarget client = SysUtils.getCAWebTarget()
-                .path("/public/role/getAllByLoginName")
-                .queryParam("loginName", user.getLoginName());
-        Set<String> roleSet = JSON.parseObject(client.request().get(String.class), Set.class);
+        Set<String> roleSet = restTemplate.getForObject(
+                RestUtils.getCAServerUrl("/public/role/getAllByLoginName?loginName={loginName}"),
+                Set.class,
+                user.getLoginName()
+        );
+
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo(roleSet);
 
-        client = SysUtils.getCAWebTarget()
-                .path("/public/permission/getAllByLoginName")
-                .queryParam("loginName", user.getLoginName());
-        Set<String> permissionSet = JSON.parseObject(client.request().get(String.class), Set.class);
+        Set<String> permissionSet = restTemplate.getForObject(
+                RestUtils.getCAServerUrl("/public/permission/getAllByLoginName?loginName={loginName}"),
+                Set.class,
+                user.getLoginName());
+
         info.setStringPermissions(permissionSet);
 
         return info;
@@ -68,6 +74,7 @@ public class CasRealm extends AuthorizingRealm {
     /**
      * 认证操作，判断一个请求是否被允许进入系统
      */
+    @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         UsernamePasswordToken upToken = (UsernamePasswordToken) token;
         String username = upToken.getUsername();

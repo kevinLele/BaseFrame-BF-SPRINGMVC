@@ -5,16 +5,17 @@ import com.hq.CloudPlatform.BaseFrame.restful.view.JsonViewObject;
 import com.hq.CloudPlatform.BaseFrame.restful.view.User;
 import com.hq.CloudPlatform.BaseFrame.sys.Constants;
 import com.hq.CloudPlatform.BaseFrame.utils.ConfigHelper;
-import com.hq.CloudPlatform.BaseFrame.utils.SysUtils;
+import com.hq.CloudPlatform.BaseFrame.utils.rest.RestUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.client.WebTarget;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
@@ -24,6 +25,9 @@ import java.util.regex.Pattern;
 public class LoginFilter implements Filter {
 
     private Pattern pattern;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -57,11 +61,10 @@ public class LoginFilter implements Filter {
         //用户
         if (null == user && isUseCAS) {
             //从CA系统获取当前用户的登陆信息并存在SESSION中
-            WebTarget client = SysUtils.getCAWebTarget()
-                    .path("/public/user/getByLoginName")
-                    .queryParam("loginName", username);
-            String userJsonStr = client.request().get(String.class);
-            JsonViewObject jsonObj = JSON.parseObject(userJsonStr, JsonViewObject.class);
+            JsonViewObject jsonObj = restTemplate.getForObject(
+                    RestUtils.getCAServerUrl("/public/user/getByLoginName?loginName={loginName}"),
+                    JsonViewObject.class,
+                    username);
             user = JSON.parseObject(jsonObj.getContentAsStr(), User.class);
             session.setAttribute(Constants.SESSION_KEY_USER, user);
 

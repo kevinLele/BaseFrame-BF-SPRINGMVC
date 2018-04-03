@@ -23,13 +23,6 @@ public interface Constants {
         String CFG_CACHE_NAME = "config";
     }
 
-    interface MediaType {
-
-        String APPLICATION_JSON = javax.ws.rs.core.MediaType.APPLICATION_JSON
-                + ";charset=utf-8";
-
-    }
-
     /**
      * Restful 对外的静态变量
      */

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- job的定义 -->
+    <bean name="myJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.hq.CloudPlatform.BaseFrame.job.PrintMessage" />
+        <!-- 回调参数的定义 -->
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="name" value="zhangsan" />
+            </map>
+        </property>
+    </bean>
+
+    <!-- 将需要执行的定时任务注入JOB中 -->
+    <bean name="normalJob"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="pojoJob"></property>
+        <!-- 任务类中需要执行的方法 -->
+        <property name="targetMethod" value="doSomething"></property>
+        <!-- 是否并发执行 -->
+        <property name="concurrent" value="false"></property>
+    </bean>
+
+    <!-- SimpleTrigger 触发器 -->
+    <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        <property name="jobDetail" ref="normalJob" />
+        <property name="startDelay" value="0" /><!-- 调度工厂实例化后，经过0秒开始执行调度 -->
+        <property name="repeatInterval" value="5000" /><!-- 每2秒调度一次 -->
+    </bean>
+
+    <!-- CronTriggerBean 触发器 -->
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="myJob" />
+        <!-- 每10秒执行一次 -->
+        <property name="cronExpression" value="0/10 * * * * ?" />
+    </bean>
+
+    <!-- 配置调度工厂 -->
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="simpleTrigger" />
+                <ref bean="cronTrigger" />
+            </list>
+        </property>
+    </bean>
+</beans>

@@ -9,7 +9,9 @@ import java.io.IOException;
 import java.util.regex.Pattern;
 
 /**
- * Created by Administrator on 10/16/2017.
+ *
+ * @author Administrator
+ * @date 10/16/2017
  */
 @Slf4j
 public class RequireHttpsProcessingFilter implements Filter {

@@ -20,7 +20,9 @@ import java.io.IOException;
 import java.util.regex.Pattern;
 
 /**
- * Created by Administrator on 2015/11/26 0026.
+ *
+ * @author Administrator
+ * @date 2015/11/26 0026
  */
 public class LoginFilter implements Filter {
 

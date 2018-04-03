@@ -11,6 +11,7 @@ import java.io.IOException;
 
 public class CrossDomainFilter extends AbstractFilter {
 
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletResponse rsp = (HttpServletResponse) response;
 

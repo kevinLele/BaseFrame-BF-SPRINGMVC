@@ -1,32 +1,33 @@
 package com.hq.CloudPlatform.BaseFrame.restful;
 
-import com.hq.CloudPlatform.BaseFrame.sys.Constants;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
+import com.hq.CloudPlatform.BaseFrame.restful.view.Page;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 public interface IBaseRestService {
 
     /**
      * 分页查询
      *
-     * @param jsonStr
+     * @param page
      * @return
      */
-    @POST
-    @Path("getPage")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(Constants.MediaType.APPLICATION_JSON)
-    String getPage(String jsonStr);
+    @PostMapping(
+            value = "getPage",
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    String getPage(Page page);
 
     /**
      * 获取所有数据
      *
      * @return
      */
-    @GET
-    @Path("getAll")
-    @Produces(Constants.MediaType.APPLICATION_JSON)
+    @GetMapping(
+            value = "getAll",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     String getAll();
 
     /**
@@ -36,10 +37,10 @@ public interface IBaseRestService {
      * @param jsonStr
      * @return
      */
-    @POST
-    @Path("getByWhere")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(Constants.MediaType.APPLICATION_JSON)
+    @PostMapping(
+            value = "getByWhere",
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     String getByWhere(String jsonStr);
 
     /**
@@ -49,10 +50,10 @@ public interface IBaseRestService {
      * @param id
      * @return
      */
-    @GET
-    @Path("getById")
-    @Produces(Constants.MediaType.APPLICATION_JSON)
-    String getById(@QueryParam("id") String id);
+    @GetMapping(
+            value = "getById",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    String getById(@RequestParam("id") String id);
 
     /**
      * 根据名称查询
@@ -61,10 +62,10 @@ public interface IBaseRestService {
      * @param name
      * @return
      */
-    @GET
-    @Path("getByName")
-    @Produces(Constants.MediaType.APPLICATION_JSON)
-    String getByName(@QueryParam("name") String name);
+    @GetMapping(
+            value = "getByName",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    String getByName(@RequestParam("name") String name);
 
     /**
      * 检查是否存在
@@ -73,10 +74,10 @@ public interface IBaseRestService {
      * @param jsonStr
      * @return
      */
-    @POST
-    @Path("isExist")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(Constants.MediaType.APPLICATION_JSON)
+    @PostMapping(
+            value = "isExist",
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     String isExist(String jsonStr);
 
     /**
@@ -86,10 +87,10 @@ public interface IBaseRestService {
      * @param id
      * @return
      */
-    @GET
-    @Path("removeById")
-    @Produces(Constants.MediaType.APPLICATION_JSON)
-    String removeById(@QueryParam("id") String id);
+    @GetMapping(
+            value = "removeById",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    String removeById(@RequestParam("id") String id);
 
     /**
      * 根据传入的id列表进行批量逻辑删除
@@ -98,10 +99,10 @@ public interface IBaseRestService {
      * @param jsonStr
      * @return
      */
-    @POST
-    @Path("batchRemove")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(Constants.MediaType.APPLICATION_JSON)
+    @PostMapping(
+            value = "batchRemove",
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     String batchRemove(String jsonStr);
 
     /**
@@ -111,10 +112,10 @@ public interface IBaseRestService {
      * @param id
      * @return
      */
-    @GET
-    @Path("removeFromDbById")
-    @Produces(Constants.MediaType.APPLICATION_JSON)
-    String removeFromDbById(@QueryParam("id") String id);
+    @GetMapping(
+            value = "removeFromDbById",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    String removeFromDbById(@RequestParam("id") String id);
 
     /**
      * 根据传入的id列表进行批量删除
@@ -123,10 +124,10 @@ public interface IBaseRestService {
      * @param jsonStr
      * @return
      */
-    @POST
-    @Path("batchRemoveFromDb")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(Constants.MediaType.APPLICATION_JSON)
+    @PostMapping(
+            value = "batchRemoveFromDb",
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     String batchRemoveFromDb(String jsonStr);
 
     /**
@@ -135,10 +136,10 @@ public interface IBaseRestService {
      * @param jsonStr
      * @return
      */
-    @POST
-    @Path("removeByWhere")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(Constants.MediaType.APPLICATION_JSON)
+    @PostMapping(
+            value = "removeByWhere",
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     String removeByWhere(String jsonStr);
 
     /**
@@ -148,10 +149,10 @@ public interface IBaseRestService {
      * @param jsonStr
      * @return
      */
-    @POST
-    @Path("save")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(Constants.MediaType.APPLICATION_JSON)
+    @PostMapping(
+            value = "save",
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     String save(String jsonStr);
 
     /**
@@ -161,10 +162,10 @@ public interface IBaseRestService {
      * @param jsonStr
      * @return
      */
-    @POST
-    @Path("modify")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(Constants.MediaType.APPLICATION_JSON)
+    @PostMapping(
+            value = "modify",
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     String modify(String jsonStr);
 
     /**
@@ -173,9 +174,9 @@ public interface IBaseRestService {
      * @param jsonStr
      * @return
      */
-    @POST
-    @Path("batchModify")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(Constants.MediaType.APPLICATION_JSON)
+    @PostMapping(
+            value = "batchModify",
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     String batchModify(String jsonStr);
 }

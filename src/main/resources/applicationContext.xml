@@ -109,8 +109,11 @@
         <property name="loginUrl" value="/login.html"/>
         <property name="filterChainDefinitions">
             <value>
+                /swagger*/** = anon
+                /v2/** = anon
+                /webjars/** = anon
                 /login.html = anon
-                /restful/sys/login = anon
+                /sys/login = anon
                 /img/** = anon
                 /css/** = anon
                 /js/** = anon

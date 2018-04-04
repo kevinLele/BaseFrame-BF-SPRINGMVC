@@ -1,5 +1,6 @@
 package com.hq.CloudPlatform.BaseFrame.restful;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hq.CloudPlatform.BaseFrame.restful.view.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,7 +8,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-public interface IBaseRestService {
+import java.util.List;
+import java.util.Map;
+
+public interface IBaseRestService<Entity> {
 
     /**
      * 分页查询
@@ -35,14 +39,14 @@ public interface IBaseRestService {
      * 根据条件查询
      * 将条件实体bean转化成jsonStr
      *
-     * @param jsonStr
+     * @param mapBean
      * @return
      */
     @PostMapping(
             value = "getByWhere",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String getByWhere(String jsonStr);
+    String getByWhere(@RequestBody Map<String, Object> mapBean);
 
     /**
      * 根据id查询
@@ -72,14 +76,14 @@ public interface IBaseRestService {
      * 检查是否存在
      * 通过传入的参数传换为实体并作为条件进行查询，如果查找到则返回true,否则返回false
      *
-     * @param jsonStr
+     * @param mapBean
      * @return
      */
     @PostMapping(
             value = "isExist",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String isExist(String jsonStr);
+    String isExist(@RequestBody Map<String, Object> mapBean);
 
     /**
      * 根据id进行逻辑删除
@@ -97,14 +101,14 @@ public interface IBaseRestService {
      * 根据传入的id列表进行批量逻辑删除
      * 逻辑删除,数据库中标识为已删除的状态，表中必须有is_delete字段
      *
-     * @param jsonStr
+     * @param idList
      * @return
      */
     @PostMapping(
             value = "batchRemove",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String batchRemove(String jsonStr);
+    String batchRemove(@RequestBody List<String> idList);
 
     /**
      * 根据id从数据库中删除
@@ -122,62 +126,62 @@ public interface IBaseRestService {
      * 根据传入的id列表进行批量删除
      * 物理删除
      *
-     * @param jsonStr
+     * @param idList
      * @return
      */
     @PostMapping(
             value = "batchRemoveFromDb",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String batchRemoveFromDb(String jsonStr);
+    String batchRemoveFromDb(@RequestBody List<String> idList);
 
     /**
      * 根据传入的条件进行删除
      *
-     * @param jsonStr
+     * @param mapBean
      * @return
      */
     @PostMapping(
             value = "removeByWhere",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String removeByWhere(String jsonStr);
+    String removeByWhere(@RequestBody Map<String, Object> mapBean);
 
     /**
      * 保存
      * 将实体bean转化成jsonStr
      *
-     * @param jsonStr
+     * @param entity
      * @return
      */
     @PostMapping(
             value = "save",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String save(String jsonStr);
+    String save(@RequestBody Entity entity);
 
     /**
      * 编辑
      * 将实体bean转化成jsonStr
      *
-     * @param jsonStr
+     * @param entity
      * @return
      */
     @PostMapping(
             value = "modify",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String modify(String jsonStr);
+    String modify(@RequestBody Entity entity);
 
     /**
      * 批量修改
      *
-     * @param jsonStr
+     * @param jsonObject
      * @return
      */
     @PostMapping(
             value = "batchModify",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String batchModify(String jsonStr);
+    String batchModify(@RequestBody JSONObject jsonObject);
 }

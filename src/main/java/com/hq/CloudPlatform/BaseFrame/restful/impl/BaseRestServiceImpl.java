@@ -23,7 +23,7 @@ import java.util.Map;
  * Created by admin on 2017/3/7.
  */
 @Slf4j
-public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements IBaseRestService {
+public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements IBaseRestService<Entity> {
 
     @Autowired
     @Lazy
@@ -39,16 +39,15 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      * 检查是否存在
      * 通过传入的参数传换为实体并作为条件进行查询，如果查找到则返回true,否则返回false
      *
-     * @param jsonStr
+     * @param mapBean
      * @return
      */
     @Override
-    public String isExist(String jsonStr) {
+    public String isExist(Map<String, Object> mapBean) {
         boolean flag = false;
         JsonViewObject jsonView = new JsonViewObject();
 
         try {
-            Map<String, Object> mapBean = JSON.parseObject(jsonStr);
             List<Entity> entityList = this.getService().findByMap(mapBean, "findByMap");
 
             if (entityList != null && entityList.size() > 0) {
@@ -60,7 +59,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
             jsonView.unauthorizedPack();
         } catch (Exception e) {
             jsonView.failPack(JSON.toJSONString(flag));
-            log.error("BaseRestServiceImpl isExist is error,{jsonStr:" + jsonStr + "}", e);
+            log.error("BaseRestServiceImpl isExist is error,{jsonStr:" + JSON.toJSONString(mapBean) + "}", e);
         }
 
         return JSON.toJSONStringWithDateFormat(jsonView, "yyyy-MM-dd HH:mm:ss");
@@ -157,19 +156,18 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
     /**
      * 根据不同的条件进行查询
      *
-     * @param jsonStr
+     * @param mapBean
      * @return
      */
     @Override
-    public String getByWhere(String jsonStr) {
-        return getByWhere(jsonStr, "findByMap");
+    public String getByWhere(Map<String, Object> mapBean) {
+        return getByWhere(mapBean, "findByMap");
     }
 
-    protected String getByWhere(String jsonStr, String mapperFunc) {
+    protected String getByWhere(Map<String, Object> mapBean, String mapperFunc) {
         JsonViewObject jsonView = new JsonViewObject();
 
         try {
-            Map<String, Object> mapBean = JSON.parseObject(jsonStr);
             List<Entity> list = this.getService().findByMap(mapBean, mapperFunc);
 
             if (list.size() != 0) {
@@ -183,7 +181,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
         } catch (Exception e) {
             jsonView.failPack(e);
             log.error("BaseRestServiceImpl getByWhere is error，{jsonStr:"
-                    + jsonStr + ",mapperFunc:" + mapperFunc + "}", e);
+                    + JSON.toJSONString(mapBean) + ",mapperFunc:" + mapperFunc + "}", e);
         }
 
         return JSON.toJSONStringWithDateFormat(jsonView, "yyyy-MM-dd HH:mm:ss");
@@ -270,17 +268,15 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      * 批量删除
      * 请求参数样例：["id1","id2","id3","id4"]
      *
-     * @param jsonStr
+     * @param idList
      * @return
      */
     @Override
-    public String batchRemove(String jsonStr) {
+    public String batchRemove(List<String> idList) {
         boolean flag = false;
         JsonViewObject jsonView = new JsonViewObject();
 
         try {
-            List<String> idList = JSON.parseArray(jsonStr, String.class);
-
             if (idList.size() <= 0) {
                 jsonView.successPack("false");
             } else {
@@ -292,7 +288,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
             jsonView.unauthorizedPack();
         } catch (Exception e) {
             jsonView.failPack(JSON.toJSONString(flag));
-            log.error("BaseRestServiceImpl batchRemove is error," + jsonStr, e);
+            log.error("BaseRestServiceImpl batchRemove is error," + JSON.toJSONString(idList), e);
         }
 
         return JSON.toJSONStringWithDateFormat(jsonView, "yyyy-MM-dd HH:mm:ss");
@@ -325,13 +321,11 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
     }
 
     @Override
-    public String batchRemoveFromDb(String jsonStr) {
+    public String batchRemoveFromDb(List<String> idList) {
         boolean flag = false;
         JsonViewObject jsonView = new JsonViewObject();
 
         try {
-            List<String> idList = JSON.parseArray(jsonStr, String.class);
-
             if (idList.size() <= 0) {
                 jsonView.successPack("false");
             } else {
@@ -343,7 +337,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
             jsonView.unauthorizedPack();
         } catch (Exception e) {
             jsonView.failPack(JSON.toJSONString(flag));
-            log.error("BaseRestServiceImpl batchRemoveFromDb is error," + jsonStr, e);
+            log.error("BaseRestServiceImpl batchRemoveFromDb is error," + JSON.toJSONString(idList), e);
         }
 
         return JSON.toJSONStringWithDateFormat(jsonView, "yyyy-MM-dd HH:mm:ss");
@@ -352,16 +346,15 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
     /**
      * 根据传入的条件进行删除
      *
-     * @param jsonStr
+     * @param mapBean
      * @return
      */
     @Override
-    public String removeByWhere(String jsonStr) {
+    public String removeByWhere(Map<String, Object> mapBean) {
         JsonViewObject jsonView = new JsonViewObject();
         boolean flag;
 
         try {
-            Map<String, Object> mapBean = JSON.parseObject(jsonStr);
             flag = this.getService().deleteByWhere(mapBean);
 
             jsonView.successPack(flag);
@@ -369,7 +362,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
             jsonView.unauthorizedPack();
         } catch (Exception e) {
             jsonView.failPack(e);
-            log.error("BaseRestServiceImpl removeByWhere is error，{jsonStr:" + jsonStr + "}", e);
+            log.error("BaseRestServiceImpl removeByWhere is error，{jsonStr:" + JSON.toJSONString(mapBean) + "}", e);
         }
 
         return JSON.toJSONStringWithDateFormat(jsonView, "yyyy-MM-dd HH:mm:ss");
@@ -378,16 +371,14 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
     /**
      * 实现新增
      *
-     * @param jsonStr
+     * @param entity
      * @return
      */
     @Override
-    public String save(String jsonStr) {
+    public String save(Entity entity) {
         JsonViewObject jsonView = new JsonViewObject();
 
         try {
-            Entity entity = JSON.parseObject(jsonStr, this.getEntityClass());
-
             if (entity != null) {
                 String id = this.getService().save(entity);
 
@@ -407,7 +398,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
             }
 
             jsonView.failPack("false", message);
-            log.error("BaseRestServiceImpl save is error,{jsonStr:" + jsonStr + "}," + e.getMessage(), e);
+            log.error("BaseRestServiceImpl save is error,{jsonStr:" + JSON.toJSONString(entity) + "}," + e.getMessage(), e);
         }
 
         return JSON.toJSONStringWithDateFormat(jsonView, "yyyy-MM-dd HH:mm:ss");
@@ -416,16 +407,14 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
     /**
      * 修改记录
      *
-     * @param jsonStr
+     * @param entity
      * @return
      */
     @Override
-    public String modify(String jsonStr) {
+    public String modify(Entity entity) {
         JsonViewObject jsonView = new JsonViewObject();
 
         try {
-            Entity entity = JSON.parseObject(jsonStr, this.getEntityClass());
-
             if (entity != null) {
                 jsonView.successPack(this.getService().update(entity));
             }
@@ -439,19 +428,17 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
             }
 
             jsonView.failPack("false", message);
-            log.error("BaseRestServiceImpl modify is error,{jsonStr:" + jsonStr + "}," + e.getMessage(), e);
+            log.error("BaseRestServiceImpl modify is error,{jsonStr:" + JSON.toJSONString(entity) + "}," + e.getMessage(), e);
         }
 
         return JSON.toJSONStringWithDateFormat(jsonView, "yyyy-MM-dd HH:mm:ss");
     }
 
     @Override
-    public String batchModify(String jsonStr) {
+    public String batchModify(JSONObject jsonObject) {
         JsonViewObject jsonView = new JsonViewObject();
 
-
         try {
-            JSONObject jsonObject = JSON.parseObject(jsonStr);
             String entityJsonStr = jsonObject.getString("entity");
             String idListJsonStr = jsonObject.getString("idList");
             Entity entity = JSON.parseObject(entityJsonStr, this.getEntityClass());
@@ -470,7 +457,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
             }
 
             jsonView.failPack("false", message);
-            log.error("BaseRestServiceImpl batchModify is error,{jsonStr:" + jsonStr + "}," + e.getMessage(), e);
+            log.error("BaseRestServiceImpl batchModify is error,{jsonStr:" + JSON.toJSONString(jsonObject) + "}," + e.getMessage(), e);
         }
 
         return JSON.toJSONStringWithDateFormat(jsonView, "yyyy-MM-dd HH:mm:ss");
@@ -485,6 +472,4 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
         return (Class<Entity>) ((ParameterizedType) getClass()
                 .getGenericSuperclass()).getActualTypeArguments()[0];
     }
-
-
 }

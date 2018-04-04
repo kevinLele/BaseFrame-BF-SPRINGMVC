@@ -3,14 +3,14 @@
 
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
       <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-        <pattern>%xThrowable%d{yyyyMMdd HH:mm:ss.SSS} %-5level %logger %class\(%L\) - %msg%n</pattern>
+        <pattern>%xThrowable%d{yyyyMMdd HH:mm:ss.SSS} %-5level %class\(%L\) - %msg%n</pattern>
       </encoder>
   </appender>
 
   <appender name="FILE" class="ch.qos.logback.core.FileAppender">
     <file>BaseFrame.log</file>
     <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-      <pattern>%xThrowable%d{yyyyMMdd HH:mm:ss.SSS} %-5level %logger %class\(%L\) - %msg%n</pattern>
+      <pattern>%xThrowable%d{yyyyMMdd HH:mm:ss.SSS} %-5level %class\(%L\) - %msg%n</pattern>
     </encoder>
   </appender>
   

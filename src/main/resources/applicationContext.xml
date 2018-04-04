@@ -113,7 +113,7 @@
                 /v2/** = anon
                 /webjars/** = anon
                 /login.html = anon
-                /sys/login = anon
+                /api/sys/login = anon
                 /img/** = anon
                 /css/** = anon
                 /js/** = anon

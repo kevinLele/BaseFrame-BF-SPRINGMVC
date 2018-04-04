@@ -218,7 +218,7 @@
 
     <servlet-mapping>
         <servlet-name>spring-mvc</servlet-name>
-        <url-pattern>/restful/*</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
     <!-- spring MVC config end-->
 

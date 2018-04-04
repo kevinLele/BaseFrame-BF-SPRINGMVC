@@ -36,7 +36,7 @@
     <!-- CronTriggerBean 触发器 -->
     <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="myJob" />
-        <!-- 每分钟执行一次 -->
+        <!-- 每分钟执行一次 注意：cron只没法设置成每隔50秒触发一次的，这种情况只能使用上面的simpleTrigger -->
         <property name="cronExpression" value="0 */1 * * * ?" />
     </bean>
 

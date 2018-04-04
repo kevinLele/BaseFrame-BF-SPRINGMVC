@@ -36,8 +36,8 @@
     <!-- CronTriggerBean 触发器 -->
     <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="myJob" />
-        <!-- 每50秒执行一次 -->
-        <property name="cronExpression" value="0/50 * * * * ?" />
+        <!-- 每分钟执行一次 -->
+        <property name="cronExpression" value="0 */1 * * * ?" />
     </bean>
 
     <!-- 配置调度工厂 -->

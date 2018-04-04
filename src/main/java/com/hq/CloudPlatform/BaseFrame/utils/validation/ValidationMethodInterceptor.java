@@ -30,7 +30,7 @@ public class ValidationMethodInterceptor implements MethodInterceptor {
 
         if (null != args && args.length > 0) {
             for (int i = 0; i < args.length; i++) {
-                Object arg = invocation.getArguments()[i];
+                Object arg = args[i];
 
                 if (null == arg) {
                     continue;

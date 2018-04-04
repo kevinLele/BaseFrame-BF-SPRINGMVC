@@ -89,6 +89,7 @@
                 <property name="storedCredentialsHexEncoded" value="true"/>
             </bean>
         </property>
+        <!-- 不使用Shiro自带的缓存方案, 缓存统一使用Spring Cache -->
         <property name="authorizationCachingEnabled" value="false"/>
     </bean>
 
@@ -114,7 +115,7 @@
                 /css/** = anon
                 /js/** = anon
                 /logout = logout
-                /** = anon
+                /** = user
             </value>
         </property>
         <!--自定义拦截器-->
@@ -191,8 +192,8 @@
     <aop:aspectj-autoproxy proxy-target-class="true" expose-proxy="true"/>
 
     <import resource="rest-template.cfg.xml"/>
-    <!--<import resource="spring-cache.xml"/>-->
-    <!--<import resource="redis-config.xml"/>-->
-    <!--<import resource="activiti.cfg.xml"/>-->
-    <!--<import resource="quartz.cfg.xml"/>-->
+    <import resource="spring-cache.xml"/>
+    <import resource="redis-config.xml"/>
+    <import resource="activiti.cfg.xml"/>
+    <import resource="quartz.cfg.xml"/>
 </beans>

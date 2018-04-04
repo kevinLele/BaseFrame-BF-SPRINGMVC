@@ -7,7 +7,9 @@ import com.hq.CloudPlatform.BaseFrame.restful.view.Permission;
 import java.util.Set;
 
 /**
- * Created by admin on 2017/3/7.
+ *
+ * @author admin
+ * @date 2017/3/7
  */
 public interface IPermissionService extends IBaseService<Permission> {
     /**

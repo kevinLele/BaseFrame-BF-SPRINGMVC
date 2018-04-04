@@ -3,10 +3,7 @@ package com.hq.CloudPlatform.BaseFrame.restful;
 import com.alibaba.fastjson.JSONObject;
 import com.hq.CloudPlatform.BaseFrame.restful.view.Page;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -23,7 +20,7 @@ public interface IBaseRestService<Entity> {
             value = "getPage",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String getPage(@RequestBody Page page);
+    String getPage(Page page);
 
     /**
      * 获取所有数据
@@ -46,7 +43,7 @@ public interface IBaseRestService<Entity> {
             value = "getByWhere",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String getByWhere(@RequestBody Map<String, Object> mapBean);
+    String getByWhere(Map<String, Object> mapBean);
 
     /**
      * 根据id查询
@@ -58,7 +55,7 @@ public interface IBaseRestService<Entity> {
     @GetMapping(
             value = "getById",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String getById(@RequestParam("id") String id);
+    String getById(String id);
 
     /**
      * 根据名称查询
@@ -70,7 +67,7 @@ public interface IBaseRestService<Entity> {
     @GetMapping(
             value = "getByName",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String getByName(@RequestParam("name") String name);
+    String getByName(String name);
 
     /**
      * 检查是否存在
@@ -83,7 +80,7 @@ public interface IBaseRestService<Entity> {
             value = "isExist",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String isExist(@RequestBody Map<String, Object> mapBean);
+    String isExist(Map<String, Object> mapBean);
 
     /**
      * 根据id进行逻辑删除
@@ -95,7 +92,7 @@ public interface IBaseRestService<Entity> {
     @GetMapping(
             value = "removeById",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String removeById(@RequestParam("id") String id);
+    String removeById(String id);
 
     /**
      * 根据传入的id列表进行批量逻辑删除
@@ -108,7 +105,7 @@ public interface IBaseRestService<Entity> {
             value = "batchRemove",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String batchRemove(@RequestBody List<String> idList);
+    String batchRemove(List<String> idList);
 
     /**
      * 根据id从数据库中删除
@@ -120,7 +117,7 @@ public interface IBaseRestService<Entity> {
     @GetMapping(
             value = "removeFromDbById",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String removeFromDbById(@RequestParam("id") String id);
+    String removeFromDbById(String id);
 
     /**
      * 根据传入的id列表进行批量删除
@@ -133,7 +130,7 @@ public interface IBaseRestService<Entity> {
             value = "batchRemoveFromDb",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String batchRemoveFromDb(@RequestBody List<String> idList);
+    String batchRemoveFromDb(List<String> idList);
 
     /**
      * 根据传入的条件进行删除
@@ -145,7 +142,7 @@ public interface IBaseRestService<Entity> {
             value = "removeByWhere",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String removeByWhere(@RequestBody Map<String, Object> mapBean);
+    String removeByWhere(Map<String, Object> mapBean);
 
     /**
      * 保存
@@ -158,7 +155,7 @@ public interface IBaseRestService<Entity> {
             value = "save",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String save(@RequestBody Entity entity);
+    String save(Entity entity);
 
     /**
      * 编辑
@@ -171,7 +168,7 @@ public interface IBaseRestService<Entity> {
             value = "modify",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String modify(@RequestBody Entity entity);
+    String modify(Entity entity);
 
     /**
      * 批量修改
@@ -183,5 +180,5 @@ public interface IBaseRestService<Entity> {
             value = "batchModify",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String batchModify(@RequestBody JSONObject jsonObject);
+    String batchModify(JSONObject jsonObject);
 }

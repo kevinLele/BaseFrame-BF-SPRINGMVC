@@ -12,6 +12,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,7 +45,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      * @return
      */
     @Override
-    public String isExist(Map<String, Object> mapBean) {
+    public String isExist(@RequestBody Map<String, Object> mapBean) {
         boolean flag = false;
         JsonViewObject jsonView = new JsonViewObject();
 
@@ -109,7 +111,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      * @return
      */
     @Override
-    public String getPage(Page page) {
+    public String getPage(@RequestBody Page page) {
         return getPage(page, "getCount", "findByPage");
     }
 
@@ -160,7 +162,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      * @return
      */
     @Override
-    public String getByWhere(Map<String, Object> mapBean) {
+    public String getByWhere(@RequestBody Map<String, Object> mapBean) {
         return getByWhere(mapBean, "findByMap");
     }
 
@@ -194,7 +196,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      * @return
      */
     @Override
-    public String getById(String id) {
+    public String getById(@RequestParam("id") String id) {
         JsonViewObject jsonView = new JsonViewObject();
 
         try {
@@ -220,7 +222,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      * @return
      */
     @Override
-    public String getByName(String name) {
+    public String getByName(@RequestParam("name") String name) {
         JsonViewObject jsonView = new JsonViewObject();
 
         try {
@@ -246,7 +248,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      * @return
      */
     @Override
-    public String removeById(String id) {
+    public String removeById(@RequestParam("id") String id) {
         boolean flag = false;
         JsonViewObject jsonView = new JsonViewObject();
 
@@ -272,7 +274,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      * @return
      */
     @Override
-    public String batchRemove(List<String> idList) {
+    public String batchRemove(@RequestBody List<String> idList) {
         boolean flag = false;
         JsonViewObject jsonView = new JsonViewObject();
 
@@ -302,7 +304,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      * @return
      */
     @Override
-    public String removeFromDbById(String id) {
+    public String removeFromDbById(@RequestParam("id") String id) {
         boolean flag = false;
         JsonViewObject jsonView = new JsonViewObject();
 
@@ -321,7 +323,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
     }
 
     @Override
-    public String batchRemoveFromDb(List<String> idList) {
+    public String batchRemoveFromDb(@RequestBody List<String> idList) {
         boolean flag = false;
         JsonViewObject jsonView = new JsonViewObject();
 
@@ -350,7 +352,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      * @return
      */
     @Override
-    public String removeByWhere(Map<String, Object> mapBean) {
+    public String removeByWhere(@RequestBody Map<String, Object> mapBean) {
         JsonViewObject jsonView = new JsonViewObject();
         boolean flag;
 
@@ -375,7 +377,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      * @return
      */
     @Override
-    public String save(Entity entity) {
+    public String save(@RequestBody Entity entity) {
         JsonViewObject jsonView = new JsonViewObject();
 
         try {
@@ -411,7 +413,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      * @return
      */
     @Override
-    public String modify(Entity entity) {
+    public String modify(@RequestBody Entity entity) {
         JsonViewObject jsonView = new JsonViewObject();
 
         try {
@@ -435,7 +437,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
     }
 
     @Override
-    public String batchModify(JSONObject jsonObject) {
+    public String batchModify(@RequestBody JSONObject jsonObject) {
         JsonViewObject jsonView = new JsonViewObject();
 
         try {

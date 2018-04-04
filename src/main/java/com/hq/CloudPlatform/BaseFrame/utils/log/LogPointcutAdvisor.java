@@ -13,16 +13,29 @@ import java.lang.reflect.Method;
  */
 public class LogPointcutAdvisor extends StaticMethodMatcherPointcutAdvisor {
 
+    private String basePackage;
+
     @Autowired
     @Lazy
     private HttpServletRequest request;
 
-    public LogPointcutAdvisor(Advice advice) {
+    public LogPointcutAdvisor(Advice advice, String basePackage) {
         setAdvice(advice);
+        this.basePackage = basePackage;
     }
 
     @Override
     public boolean matches(Method method, Class<?> targetClass) {
-        return false;
+        if(null == targetClass.getPackage()){
+            return false;
+        }
+
+        String packagePath = targetClass.getPackage().getName();
+
+        if (packagePath.startsWith(basePackage)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

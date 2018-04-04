@@ -170,7 +170,9 @@
 
     <filter-mapping>
         <filter-name>RequireHttpsProcessingFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <!-- 目前不需要这块的处理，屏蔽掉 -->
+        <!--<url-pattern>/*</url-pattern>-->
+        <url-pattern>/onlytest</url-pattern>
     </filter-mapping>
 
     <!-- 统一系统UTF-8的编码 -->

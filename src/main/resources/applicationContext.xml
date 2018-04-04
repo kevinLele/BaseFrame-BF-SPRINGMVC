@@ -137,6 +137,8 @@
           class="com.hq.CloudPlatform.BaseFrame.utils.log.LogMethodInterceptor"/>
     <bean class="com.hq.CloudPlatform.BaseFrame.utils.log.LogPointcutAdvisor">
         <constructor-arg name="advice" ref="logMethodInterceptor"/>
+        <!-- 只拦截指定的包下的类 -->
+        <constructor-arg name="basePackage" value="com.hq.CloudPlatform.BaseFrame.service"/>
     </bean>
 
     <!-- 用于支持自定义验证的注解 -->

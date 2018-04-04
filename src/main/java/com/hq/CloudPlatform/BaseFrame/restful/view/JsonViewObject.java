@@ -6,8 +6,9 @@ import com.hq.CloudPlatform.BaseFrame.sys.Constants;
 
 /**
  * restful对外的JSON 对象封装
+ * @author Administrator
  */
-public class JsonViewObject {
+public class JsonViewObject<Entity> {
 
     /**
      * 状态值
@@ -27,16 +28,16 @@ public class JsonViewObject {
     /**
      * 返回的内容
      */
-    private Object content;
+    private Entity content;
 
-    public JsonViewObject successPack(Object content) {
+    public JsonViewObject successPack(Entity content) {
         this.setMessage("");
         this.setContent(content);
         this.setStatus(Constants.JsonView.STATUS_SUCCESS);
         return this;
     }
 
-    public JsonViewObject successPack(Object content, String msg) {
+    public JsonViewObject successPack(Entity content, String msg) {
         this.setContent(content);
         this.setMessage(msg);
         this.setStatus(Constants.JsonView.STATUS_SUCCESS);
@@ -47,14 +48,12 @@ public class JsonViewObject {
         String message = e.getMessage();
         int index = message.indexOf(":");
         setMessage(index == -1 ? message : message.substring(index + 1));
-        setContent("");
         setStatus(Constants.JsonView.STATUS_FAIL);
         return this;
     }
 
     public JsonViewObject failPack(String errMsg) {
         setMessage(errMsg);
-        setContent("");
         setStatus(Constants.JsonView.STATUS_FAIL);
         return this;
     }
@@ -67,7 +66,6 @@ public class JsonViewObject {
      */
     public JsonViewObject unauthenticatedPack() {
         setMessage("未认证，请先登陆系统！");
-        setContent("");
         setStatus(Constants.JsonView.UNAUTHENTICATED);
         return this;
     }
@@ -80,19 +78,18 @@ public class JsonViewObject {
      */
     public JsonViewObject unauthorizedPack() {
         setMessage("您无权进行该操作！");
-        setContent("");
         setStatus(Constants.JsonView.UNAUTHORIZED);
         return this;
     }
 
-    public JsonViewObject failPack(Object content, String errMsg) {
+    public JsonViewObject failPack(Entity content, String errMsg) {
         setMessage(errMsg);
         setContent(content);
         setStatus(Constants.JsonView.STATUS_FAIL);
         return this;
     }
 
-    public JsonViewObject failPackMessage(String errMsg, Object content) {
+    public JsonViewObject failPackMessage(String errMsg, Entity content) {
         setMessage(errMsg);
         setContent(content);
         setStatus(Constants.JsonView.STATUS_FAIL);
@@ -136,7 +133,7 @@ public class JsonViewObject {
         }
     }
 
-    public void setContent(Object content) {
+    public void setContent(Entity content) {
         this.content = content;
     }
 

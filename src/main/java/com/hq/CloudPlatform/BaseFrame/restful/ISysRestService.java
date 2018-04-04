@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * Created by Administrator on 7/4/2017.
  */
-@RequestMapping("sys")
+@RequestMapping("/api/sys")
 public interface ISysRestService {
 
     @PostMapping(

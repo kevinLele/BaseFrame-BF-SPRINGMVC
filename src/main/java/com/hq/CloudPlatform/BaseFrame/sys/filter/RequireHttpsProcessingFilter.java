@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.regex.Pattern;
 
 /**
- *
  * @author Administrator
  * @date 10/16/2017
  */
@@ -34,6 +33,7 @@ public class RequireHttpsProcessingFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
+
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 

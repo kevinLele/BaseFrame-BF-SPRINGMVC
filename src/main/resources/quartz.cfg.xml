@@ -30,14 +30,14 @@
     <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
         <property name="jobDetail" ref="normalJob" />
         <property name="startDelay" value="0" /><!-- 调度工厂实例化后，经过0秒开始执行调度 -->
-        <property name="repeatInterval" value="5000" /><!-- 每2秒调度一次 -->
+        <property name="repeatInterval" value="50000" /><!-- 每50秒调度一次 -->
     </bean>
 
     <!-- CronTriggerBean 触发器 -->
     <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="myJob" />
-        <!-- 每10秒执行一次 -->
-        <property name="cronExpression" value="0/10 * * * * ?" />
+        <!-- 每100秒执行一次 -->
+        <property name="cronExpression" value="0/100 * * * * ?" />
     </bean>
 
     <!-- 配置调度工厂 -->

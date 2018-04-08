@@ -1,16 +1,20 @@
 package com.hq.CloudPlatform.BaseFrame.restful.view;
 
 import com.hq.CloudPlatform.BaseFrame.entity.BaseEntity;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
 import java.util.List;
 
+@ApiModel(value = "user对象", description = "用户对象user")
 public class User extends BaseEntity {
 
     private String orgId;
 
     private String roleId;
 
+    @ApiModelProperty(value = "用户登陆帐号", name = "loginName", example = "zhangsan")
     private String loginName;
 
     private String password;

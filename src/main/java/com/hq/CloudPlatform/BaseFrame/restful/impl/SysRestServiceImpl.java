@@ -38,7 +38,7 @@ public class SysRestServiceImpl implements ISysRestService {
      * @return
      */
     @Override
-    public String login(@RequestBody User user) {
+    public JsonViewObject login(@RequestBody User user) {
         //模拟登陆
         HttpSession session = request.getSession();
 
@@ -55,7 +55,7 @@ public class SysRestServiceImpl implements ISysRestService {
         JsonViewObject jsonView = new JsonViewObject();
         jsonView.successPack(user);
 
-        return JSON.toJSONStringWithDateFormat(jsonView, "yyyy-MM-dd HH:mm:ss");
+        return jsonView;
     }
 
     @Override

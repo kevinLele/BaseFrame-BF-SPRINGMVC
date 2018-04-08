@@ -195,8 +195,8 @@
     <aop:aspectj-autoproxy proxy-target-class="true" expose-proxy="true"/>
 
     <import resource="rest-template.cfg.xml"/>
-    <import resource="spring-cache.xml"/>
-    <import resource="redis-config.xml"/>
-    <import resource="activiti.cfg.xml"/>
-    <import resource="quartz.cfg.xml"/>
+    <!--<import resource="spring-cache.xml"/>-->
+    <!--<import resource="redis-config.xml"/>-->
+    <!--<import resource="activiti.cfg.xml"/>-->
+    <!--<import resource="quartz.cfg.xml"/>-->
 </beans>

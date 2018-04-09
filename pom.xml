@@ -415,7 +415,7 @@
                 <db.username>huiqing</db.username>
                 <db.password>huiqing</db.password>
                 <log.dir>${project.basedir}/logs</log.dir>
-                <project.main.package>com.hq.CloudPlatform.BaseFrame</project.main.package>
+                <project.main.package>com.hq.cloudplatform.baseframe</project.main.package>
             </properties>
         </profile>
 
@@ -429,7 +429,7 @@
                 <db.username>huiqing</db.username>
                 <db.password>huiqing</db.password>
                 <log.dir>${project.basedir}/logs</log.dir>
-                <project.main.package>com.hq.CloudPlatform.BaseFrame</project.main.package>
+                <project.main.package>com.hq.cloudplatform.baseframe</project.main.package>
             </properties>
         </profile>
 
@@ -443,7 +443,7 @@
                 <db.username>huiqing</db.username>
                 <db.password>huiqing</db.password>
                 <log.dir>${project.basedir}/logs</log.dir>
-                <project.main.package>com.hq.CloudPlatform.BaseFrame</project.main.package>
+                <project.main.package>com.hq.cloudplatform.baseframe</project.main.package>
             </properties>
         </profile>
     </profiles>

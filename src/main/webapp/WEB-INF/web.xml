@@ -161,7 +161,7 @@
 
     <filter>
         <filter-name>RequireHttpsProcessingFilter</filter-name>
-        <filter-class>com.hq.CloudPlatform.BaseFrame.sys.filter.RequireHttpsProcessingFilter</filter-class>
+        <filter-class>com.hq.cloudplatform.baseframe.sys.filter.RequireHttpsProcessingFilter</filter-class>
         <init-param>
             <param-name>UrlPrefix</param-name>
             <param-value>^/login\.html</param-value>
@@ -195,7 +195,7 @@
     <!-- 用于对restful允许跨域访问的响应设置 -->
     <filter>
         <filter-name>CrossDomainFilter</filter-name>
-        <filter-class>com.hq.CloudPlatform.BaseFrame.sys.filter.CrossDomainFilter</filter-class>
+        <filter-class>com.hq.cloudplatform.baseframe.sys.filter.CrossDomainFilter</filter-class>
     </filter>
 
     <filter-mapping>

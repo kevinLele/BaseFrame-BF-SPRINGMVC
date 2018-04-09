@@ -15,9 +15,9 @@
         <property name="caches">
             <set>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
-                      p:name="#{T(com.hq.CloudPlatform.BaseFrame.sys.Constants.Caches).CACHE_NAME}"/>
+                      p:name="#{T(com.hq.cloudplatform.baseframe.sys.Constants.Caches).CACHE_NAME}"/>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
-                      p:name="#{T(com.hq.CloudPlatform.BaseFrame.sys.Constants.Caches).CFG_CACHE_NAME}"/>
+                      p:name="#{T(com.hq.cloudplatform.baseframe.sys.Constants.Caches).CFG_CACHE_NAME}"/>
             </set>
         </property>
     </bean>

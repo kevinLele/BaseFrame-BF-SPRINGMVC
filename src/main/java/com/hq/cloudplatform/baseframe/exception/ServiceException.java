@@ -1,5 +1,8 @@
-package com.hq.CloudPlatform.BaseFrame.exception;
+package com.hq.cloudplatform.baseframe.exception;
 
+/**
+ * 服务接口异常
+ */
 public class ServiceException extends Exception {
 
     private static final long serialVersionUID = 819257588855553664L;

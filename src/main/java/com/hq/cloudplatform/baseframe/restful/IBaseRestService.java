@@ -22,7 +22,7 @@ public interface IBaseRestService<Entity> {
      * @return
      */
     @PostMapping(
-            value = "getPage",
+            value = "/getPage",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResultBean<Page> getPage(Page page);
@@ -33,7 +33,7 @@ public interface IBaseRestService<Entity> {
      * @return
      */
     @GetMapping(
-            value = "getAll",
+            value = "/getAll",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResultBean<List<Entity>> getAll();
 
@@ -45,7 +45,7 @@ public interface IBaseRestService<Entity> {
      * @return
      */
     @PostMapping(
-            value = "getByWhere",
+            value = "/getByWhere",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResultBean<List<Entity>> getByWhere(Map<String, Object> mapBean);
@@ -58,7 +58,7 @@ public interface IBaseRestService<Entity> {
      * @return
      */
     @GetMapping(
-            value = "getById",
+            value = "/getById",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResultBean<Entity> getById(String id);
 
@@ -70,7 +70,7 @@ public interface IBaseRestService<Entity> {
      * @return
      */
     @GetMapping(
-            value = "getByName",
+            value = "/getByName",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResultBean<Entity> getByName(String name);
 
@@ -82,7 +82,7 @@ public interface IBaseRestService<Entity> {
      * @return
      */
     @PostMapping(
-            value = "isExist",
+            value = "/isExist",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResultBean<Boolean> isExist(Map<String, Object> mapBean);
@@ -95,7 +95,7 @@ public interface IBaseRestService<Entity> {
      * @return
      */
     @GetMapping(
-            value = "removeById",
+            value = "/removeById",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResultBean<Boolean> removeById(String id);
 
@@ -107,7 +107,7 @@ public interface IBaseRestService<Entity> {
      * @return
      */
     @PostMapping(
-            value = "batchRemove",
+            value = "/batchRemove",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResultBean<Boolean> batchRemove(List<String> idList);
@@ -120,7 +120,7 @@ public interface IBaseRestService<Entity> {
      * @return
      */
     @GetMapping(
-            value = "removeFromDbById",
+            value = "/removeFromDbById",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResultBean<Boolean> removeFromDbById(String id);
 
@@ -132,7 +132,7 @@ public interface IBaseRestService<Entity> {
      * @return
      */
     @PostMapping(
-            value = "batchRemoveFromDb",
+            value = "/batchRemoveFromDb",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResultBean<Boolean> batchRemoveFromDb(List<String> idList);
@@ -144,7 +144,7 @@ public interface IBaseRestService<Entity> {
      * @return
      */
     @PostMapping(
-            value = "removeByWhere",
+            value = "/removeByWhere",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResultBean<Boolean> removeByWhere(Map<String, Object> mapBean);
@@ -157,7 +157,7 @@ public interface IBaseRestService<Entity> {
      * @return
      */
     @PostMapping(
-            value = "save",
+            value = "/save",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResultBean<String> save(Entity entity);
@@ -170,7 +170,7 @@ public interface IBaseRestService<Entity> {
      * @return
      */
     @PostMapping(
-            value = "modify",
+            value = "/modify",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResultBean<Boolean> modify(Entity entity);
@@ -182,7 +182,7 @@ public interface IBaseRestService<Entity> {
      * @return
      */
     @PostMapping(
-            value = "batchModify",
+            value = "/batchModify",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResultBean<Boolean> batchModify(JSONObject jsonObject);

@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.hq.cloudplatform.baseframe.entity.BaseEntity;
 import com.hq.cloudplatform.baseframe.restful.IBaseRestService;
-import com.hq.cloudplatform.baseframe.restful.view.ResultBean;
 import com.hq.cloudplatform.baseframe.restful.view.Page;
+import com.hq.cloudplatform.baseframe.restful.view.ResultBean;
 import com.hq.cloudplatform.baseframe.service.IBaseService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -53,7 +53,6 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
     @Override
     public ResultBean<Boolean> isExist(@RequestBody Map<String, Object> mapBean) {
         boolean flag = false;
-        ResultBean<Boolean> resultBean = new ResultBean<>();
 
         try {
             List<Entity> entityList = this.getService().findByMap(mapBean, "findByMap");
@@ -69,8 +68,6 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
             log.error("BaseRestServiceImpl isExist is error,{jsonStr:" + JSON.toJSONString(mapBean) + "}", e);
             return ResultBean.failPack(JSON.toJSONString(flag));
         }
-
-        return resultBean;
     }
 
     /**
@@ -122,20 +119,15 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
     }
 
     protected ResultBean<Page> getPage(Page page, String countFunc, String pageFunc) {
-        ResultBean<Page> resultBean = new ResultBean<>();
-
         try {
-            page = this.getService().findByPage(page, countFunc, pageFunc);
-            resultBean.successPack(page);
+            return ResultBean.successPack(this.getService().findByPage(page, countFunc, pageFunc));
         } catch (UnauthorizedException unauthorizedException) {
-            resultBean.unauthorizedPack();
+            return ResultBean.unauthorizedPack();
         } catch (Exception e) {
-            resultBean.failPack(e);
             log.error("BaseRestServiceImpl getPage is error,{Page:"
                     + JSON.toJSONString(page) + ",countFunc:" + countFunc + ",pageFunc:" + pageFunc + "}", e);
+            return ResultBean.failPack(e);
         }
-
-        return resultBean;
     }
 
     /**
@@ -145,19 +137,15 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      */
     @Override
     public ResultBean<List<Entity>> getAll() {
-        ResultBean<List<Entity>> resultBean = new ResultBean<>();
-
         try {
             List<Entity> list = this.getService().findAll();
-            resultBean.successPack(list);
+            return ResultBean.successPack(list);
         } catch (UnauthorizedException unauthorizedException) {
-            resultBean.unauthorizedPack();
+            return ResultBean.unauthorizedPack();
         } catch (Exception e) {
-            resultBean.failPack(e);
             log.error("BaseRestServiceImpl getAll is error", e);
+            return ResultBean.failPack(e);
         }
-
-        return resultBean;
     }
 
     /**
@@ -172,26 +160,22 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
     }
 
     protected ResultBean<List<Entity>> getByWhere(Map<String, Object> mapBean, String mapperFunc) {
-        ResultBean<List<Entity>> resultBean = new ResultBean<>();
-
         try {
             List<Entity> list = this.getService().findByMap(mapBean, mapperFunc);
 
             if (list.size() != 0) {
-                resultBean.successPack(list);
+                return ResultBean.successPack(list);
             } else {
-                resultBean.failPack("fail");
+                return ResultBean.failPack("fail");
             }
 
         } catch (UnauthorizedException unauthorizedException) {
-            resultBean.unauthorizedPack();
+            return ResultBean.unauthorizedPack();
         } catch (Exception e) {
-            resultBean.failPack(e);
             log.error("BaseRestServiceImpl getByWhere is error，{jsonStr:"
                     + JSON.toJSONString(mapBean) + ",mapperFunc:" + mapperFunc + "}", e);
+            return ResultBean.failPack(e);
         }
-
-        return resultBean;
     }
 
     /**
@@ -202,21 +186,19 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      */
     @Override
     public ResultBean<Entity> getById(@RequestParam("id") String id) {
-        ResultBean<Entity> resultBean = new ResultBean<>();
-
         try {
             if (StringUtils.isNotBlank(id)) {
                 Entity entity = this.getService().findById(id);
-                resultBean.successPack(entity);
+                return ResultBean.successPack(entity);
+            } else {
+                return ResultBean.failPackMessage("undefined", "Id can't be null!");
             }
         } catch (UnauthorizedException unauthorizedException) {
-            resultBean.unauthorizedPack();
+            return ResultBean.unauthorizedPack();
         } catch (Exception e) {
-            resultBean.failPack(e);
             log.error("BaseRestServiceImpl getById is error,{id:" + id + "}", e);
+            return ResultBean.failPack(e);
         }
-
-        return resultBean;
     }
 
     /**
@@ -233,16 +215,16 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
         try {
             if (StringUtils.isNotBlank(name)) {
                 Entity entity = this.getService().findByName(name);
-                resultBean.successPack(entity);
+                return ResultBean.successPack(entity);
+            } else {
+                return ResultBean.failPackMessage("undefined", "Name can't be null!");
             }
         } catch (UnauthorizedException unauthorizedException) {
-            resultBean.unauthorizedPack();
+            return ResultBean.unauthorizedPack();
         } catch (Exception e) {
-            resultBean.failPack(e);
             log.error("BaseRestServiceImpl getByName is error,{id:" + name + "}", e);
+            return ResultBean.failPack(e);
         }
-
-        return resultBean;
     }
 
     /**
@@ -259,16 +241,13 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
 
         try {
             //逻辑删除
-            flag = this.getService().logicDeleteById(id);
-            resultBean.successPack(flag);
+            return ResultBean.successPack(this.getService().logicDeleteById(id));
         } catch (UnauthorizedException unauthorizedException) {
-            resultBean.unauthorizedPack();
+            return ResultBean.unauthorizedPack();
         } catch (Exception e) {
-            resultBean.failPack(JSON.toJSONString(flag));
             log.error("BaseRestServiceImpl removeById is error,{Id:" + id + "}", e);
+            return ResultBean.failPack(JSON.toJSONString(flag));
         }
-
-        return resultBean;
     }
 
     /**
@@ -280,25 +259,19 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      */
     @Override
     public ResultBean<Boolean> batchRemove(@RequestBody List<String> idList) {
-        boolean flag = false;
-        ResultBean<Boolean> resultBean = new ResultBean<>();
-
         try {
             if (idList.size() <= 0) {
-                resultBean.successPack(false);
+                return ResultBean.successPack(false, "id列表为空！");
             } else {
                 //逻辑删除
-                flag = this.getService().logicBatchDelete(idList);
-                resultBean.successPack(flag);
+                return ResultBean.successPack(this.getService().logicBatchDelete(idList));
             }
         } catch (UnauthorizedException unauthorizedException) {
-            resultBean.unauthorizedPack();
+            return ResultBean.unauthorizedPack();
         } catch (Exception e) {
-            resultBean.failPack(JSON.toJSONString(flag));
             log.error("BaseRestServiceImpl batchRemove is error," + JSON.toJSONString(idList), e);
+            return ResultBean.failPack(e);
         }
-
-        return resultBean;
     }
 
     /**
@@ -310,44 +283,32 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      */
     @Override
     public ResultBean<Boolean> removeFromDbById(@RequestParam("id") String id) {
-        boolean flag = false;
-        ResultBean<Boolean> resultBean = new ResultBean<>();
-
         try {
             //物理删除
-            flag = this.getService().deleteById(id);
-            resultBean.successPack(flag);
+            return ResultBean.successPack(this.getService().deleteById(id));
         } catch (UnauthorizedException unauthorizedException) {
-            resultBean.unauthorizedPack();
+            return ResultBean.unauthorizedPack();
         } catch (Exception e) {
-            resultBean.failPack(JSON.toJSONString(flag));
             log.error("BaseRestServiceImpl removeFromDbById is error,{Id:" + id + "}", e);
+            return ResultBean.failPack(e);
         }
-
-        return resultBean;
     }
 
     @Override
     public ResultBean<Boolean> batchRemoveFromDb(@RequestBody List<String> idList) {
-        boolean flag = false;
-        ResultBean<Boolean> resultBean = new ResultBean<>();
-
         try {
             if (idList.size() <= 0) {
-                resultBean.successPack(false);
+                return ResultBean.successPack(false);
             } else {
                 //物理删除
-                flag = this.getService().batchDelete(idList);
-                resultBean.successPack(flag);
+                return ResultBean.successPack(this.getService().batchDelete(idList));
             }
         } catch (UnauthorizedException unauthorizedException) {
-            resultBean.unauthorizedPack();
+            return ResultBean.unauthorizedPack();
         } catch (Exception e) {
-            resultBean.failPack(JSON.toJSONString(flag));
             log.error("BaseRestServiceImpl batchRemoveFromDb is error," + JSON.toJSONString(idList), e);
+            return ResultBean.failPack(e);
         }
-
-        return resultBean;
     }
 
     /**
@@ -358,21 +319,14 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      */
     @Override
     public ResultBean<Boolean> removeByWhere(@RequestBody Map<String, Object> mapBean) {
-        ResultBean<Boolean> resultBean = new ResultBean<>();
-        boolean flag;
-
         try {
-            flag = this.getService().deleteByWhere(mapBean);
-
-            resultBean.successPack(flag);
+            return ResultBean.successPack(this.getService().deleteByWhere(mapBean));
         } catch (UnauthorizedException unauthorizedException) {
-            resultBean.unauthorizedPack();
+            return ResultBean.unauthorizedPack();
         } catch (Exception e) {
-            resultBean.failPack(e);
             log.error("BaseRestServiceImpl removeByWhere is error，{jsonStr:" + JSON.toJSONString(mapBean) + "}", e);
+            return ResultBean.failPack(e);
         }
-
-        return resultBean;
     }
 
     /**
@@ -383,20 +337,20 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      */
     @Override
     public ResultBean<String> save(@RequestBody Entity entity) {
-        ResultBean<String> resultBean = new ResultBean<>();
-
         try {
             if (entity != null) {
                 String id = this.getService().save(entity);
 
                 if ("exists".equals(id)) {
-                    resultBean.failPack("exists");
+                    return ResultBean.failPack("exists");
                 } else {
-                    resultBean.successPack(id);
+                    return ResultBean.successPack(id);
                 }
+            } else {
+                return ResultBean.failPack("entity can't be null!");
             }
         } catch (UnauthorizedException unauthorizedException) {
-            resultBean.unauthorizedPack();
+            return ResultBean.unauthorizedPack();
         } catch (Exception e) {
             String message = e.getMessage();
 
@@ -404,11 +358,9 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
                 message = "保存数据失败！";
             }
 
-            resultBean.failPack("false", message);
             log.error("BaseRestServiceImpl save is error,{jsonStr:" + JSON.toJSONString(entity) + "}," + e.getMessage(), e);
+            return ResultBean.failPackMessage("false", message);
         }
-
-        return resultBean;
     }
 
     /**
@@ -423,10 +375,12 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
 
         try {
             if (entity != null) {
-                resultBean.successPack(this.getService().update(entity));
+                return ResultBean.successPack(this.getService().update(entity));
+            } else {
+                return ResultBean.failPack("entity can't be null!");
             }
         } catch (UnauthorizedException unauthorizedException) {
-            resultBean.unauthorizedPack();
+            return ResultBean.unauthorizedPack();
         } catch (Exception e) {
             String message = e.getMessage();
 
@@ -434,17 +388,13 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
                 message = "更新数据失败！";
             }
 
-            resultBean.failPack(false, message);
             log.error("BaseRestServiceImpl modify is error,{jsonStr:" + JSON.toJSONString(entity) + "}," + e.getMessage(), e);
+            return ResultBean.failPackMessage(false, message);
         }
-
-        return resultBean;
     }
 
     @Override
     public ResultBean<Boolean> batchModify(@RequestBody JSONObject jsonObject) {
-        ResultBean<Boolean> resultBean = new ResultBean<>();
-
         try {
             String entityJsonStr = jsonObject.getString("entity");
             String idListJsonStr = jsonObject.getString("idList");
@@ -452,10 +402,12 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
             List<String> idList = JSON.parseArray(idListJsonStr, String.class);
 
             if (entity != null && idList != null) {
-                resultBean.successPack(this.getService().batchUpdate(entity, idList));
+                return ResultBean.successPack(this.getService().batchUpdate(entity, idList));
+            } else {
+                return ResultBean.failPack("entity or idList can't be null!");
             }
         } catch (UnauthorizedException unauthorizedException) {
-            resultBean.unauthorizedPack();
+            return ResultBean.unauthorizedPack();
         } catch (Exception e) {
             String message = e.getMessage();
 
@@ -463,11 +415,9 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
                 message = "批量更新数据失败！";
             }
 
-            resultBean.failPack(false, message);
             log.error("BaseRestServiceImpl batchModify is error,{jsonStr:" + JSON.toJSONString(jsonObject) + "}," + e.getMessage(), e);
+            return ResultBean.failPackMessage(false, message);
         }
-
-        return resultBean;
     }
 
     /**

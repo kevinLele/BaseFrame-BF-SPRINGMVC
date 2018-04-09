@@ -19,11 +19,11 @@
     <context:property-placeholder location="classpath:config.properties" ignore-unresolvable="true"/>
 
     <!-- 自动装载的包 -->
-    <context:component-scan base-package="com.hq.CloudPlatform.BaseFrame.mapper"/>
-    <context:component-scan base-package="com.hq.CloudPlatform.BaseFrame.service"/>
-    <context:component-scan base-package="com.hq.CloudPlatform.BaseFrame.restful"/>
-    <context:component-scan base-package="com.hq.CloudPlatform.BaseFrame.sys"/>
-    <context:component-scan base-package="com.hq.CloudPlatform.BaseFrame.job"/>
+    <context:component-scan base-package="com.hq.cloudplatform.baseframe.mapper"/>
+    <context:component-scan base-package="com.hq.cloudplatform.baseframe.service"/>
+    <context:component-scan base-package="com.hq.cloudplatform.baseframe.restful"/>
+    <context:component-scan base-package="com.hq.cloudplatform.baseframe.sys"/>
+    <context:component-scan base-package="com.hq.cloudplatform.baseframe.job"/>
 
     <!-- 配置数据库连接池 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
@@ -73,15 +73,15 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
         <property name="mapperLocations" value="classpath:mappers/${jdbc.configLocation}/**/*.xml"/>
-        <property name="typeAliasesPackage" value="com.hq.CloudPlatform.BaseFrame.entity"/>
+        <property name="typeAliasesPackage" value="com.hq.cloudplatform.baseframe.entity"/>
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sessionFactory"/>
-        <property name="basePackage" value="com.hq.CloudPlatform.BaseFrame.mapper"/>
+        <property name="basePackage" value="com.hq.cloudplatform.baseframe.mapper"/>
     </bean>
 
-    <bean id="mybatisRealm" class="com.hq.CloudPlatform.BaseFrame.sys.realm.MybatisRealm">
+    <bean id="mybatisRealm" class="com.hq.cloudplatform.baseframe.sys.realm.MybatisRealm">
         <property name="credentialsMatcher">
             <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
                 <property name="hashAlgorithmName" value="MD5"/>
@@ -93,7 +93,7 @@
         <property name="authorizationCachingEnabled" value="false"/>
     </bean>
 
-    <bean id="casRealm" class="com.hq.CloudPlatform.BaseFrame.sys.realm.CasRealm">
+    <bean id="casRealm" class="com.hq.cloudplatform.baseframe.sys.realm.CasRealm">
         <!-- 不使用Shiro自带的缓存方案, 缓存统一使用Spring Cache -->
         <property name="authorizationCachingEnabled" value="false"/>
     </bean>
@@ -130,7 +130,7 @@
         </property>
     </bean>
 
-    <bean id="loginFilter" class="com.hq.CloudPlatform.BaseFrame.sys.filter.LoginFilter"></bean>
+    <bean id="loginFilter" class="com.hq.cloudplatform.baseframe.sys.filter.LoginFilter"></bean>
 
     <!-- 支持shiro的权限验证的注解 -->
     <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor"
@@ -138,24 +138,24 @@
 
     <!-- 用于支持自定义操作日志的注解 -->
     <bean id="logMethodInterceptor"
-          class="com.hq.CloudPlatform.BaseFrame.utils.log.LogMethodInterceptor"/>
-    <bean class="com.hq.CloudPlatform.BaseFrame.utils.log.LogPointcutAdvisor">
+          class="com.hq.cloudplatform.baseframe.utils.log.LogMethodInterceptor"/>
+    <bean class="com.hq.cloudplatform.baseframe.utils.log.LogPointcutAdvisor">
         <constructor-arg name="advice" ref="logMethodInterceptor"/>
         <!-- 只拦截指定的包下的类 -->
-        <constructor-arg name="basePackage" value="com.hq.CloudPlatform.BaseFrame.service"/>
+        <constructor-arg name="basePackage" value="com.hq.cloudplatform.baseframe.service"/>
     </bean>
 
     <!-- 用于支持自定义验证的注解 -->
     <bean id="validationMethodInterceptor"
-          class="com.hq.CloudPlatform.BaseFrame.utils.validation.ValidationMethodInterceptor"/>
-    <bean class="com.hq.CloudPlatform.BaseFrame.utils.validation.ValidationPointcutAdvisor">
+          class="com.hq.cloudplatform.baseframe.utils.validation.ValidationMethodInterceptor"/>
+    <bean class="com.hq.cloudplatform.baseframe.utils.validation.ValidationPointcutAdvisor">
         <constructor-arg name="advice" ref="validationMethodInterceptor"/>
     </bean>
 
     <!-- 用于对数据字典的code进行转换 -->
     <bean id="dictionaryTransitionInterceptor"
-          class="com.hq.CloudPlatform.BaseFrame.utils.dictionary.DictionaryTransitionInterceptor"/>
-    <bean class="com.hq.CloudPlatform.BaseFrame.utils.dictionary.DictionaryPointcutAdvisor">
+          class="com.hq.cloudplatform.baseframe.utils.dictionary.DictionaryTransitionInterceptor"/>
+    <bean class="com.hq.cloudplatform.baseframe.utils.dictionary.DictionaryPointcutAdvisor">
         <constructor-arg name="advice" ref="dictionaryTransitionInterceptor"/>
         <!--只拦截以find开头命名的方法-->
         <constructor-arg name="methodExpression" value="^find.*"/>
@@ -182,7 +182,7 @@
 
     <!-- 事务入口 -->
     <aop:config proxy-target-class="true" expose-proxy="true">
-        <aop:pointcut id="allServiceMethod" expression="execution(* com.hq.CloudPlatform.BaseFrame.service.*.*(..))"/>
+        <aop:pointcut id="allServiceMethod" expression="execution(* com.hq.cloudplatform.baseframe.service.*.*(..))"/>
         <aop:advisor pointcut-ref="allServiceMethod" advice-ref="txAdvice"/>
     </aop:config>
 

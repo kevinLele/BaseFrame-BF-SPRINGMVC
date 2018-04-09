@@ -14,7 +14,7 @@
     </encoder>
   </appender>
   
-  <logger name="com.hq.CloudPlatform.BaseFrame" level="debug"/>
+  <logger name="com.hq.cloudplatform.baseframe" level="debug"/>
   
   <root level="info">
     <appender-ref ref="STDOUT" />

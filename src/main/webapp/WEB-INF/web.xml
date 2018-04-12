@@ -200,7 +200,7 @@
 
     <filter-mapping>
         <filter-name>CrossDomainFilter</filter-name>
-        <url-pattern>/restful/*</url-pattern>
+        <url-pattern>/api/*</url-pattern>
     </filter-mapping>
 
     <!-- spring MVC config start-->

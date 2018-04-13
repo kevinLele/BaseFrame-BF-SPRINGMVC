@@ -1,11 +1,10 @@
 package com.hq.cloudplatform.baseframe.restful.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.hq.cloudplatform.baseframe.exception.ServiceException;
 import com.hq.cloudplatform.baseframe.restful.ISysRestService;
 import com.hq.cloudplatform.baseframe.restful.view.ResultBean;
 import com.hq.cloudplatform.baseframe.restful.view.User;
 import com.hq.cloudplatform.baseframe.sys.Constants;
+import com.hq.cloudplatform.baseframe.utils.json.JacksonUtil;
 import com.hq.cloudplatform.baseframe.utils.rest.RestUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
@@ -21,6 +20,9 @@ import org.springframework.web.client.RestTemplate;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * @author Administrator
+ */
 @RestController
 @Slf4j
 public class SysRestServiceImpl implements ISysRestService {
@@ -46,63 +48,57 @@ public class SysRestServiceImpl implements ISysRestService {
                 RestUtils.getCAServerUrl("/public/user/getByLoginName?loginName={loginName}"),
                 ResultBean.class, user.getLoginName());
 
-        user = JSON.parseObject(jsonObj.getContentAsStr(), User.class);
+        user = JacksonUtil.parseObject(jsonObj.getContentAsStr(), User.class);
         session.setAttribute(Constants.SESSION_KEY_USER, user);
 
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(user.getLoginName(), "");
         subject.login(token);
-        ResultBean jsonView = new ResultBean();
-        jsonView.successPack(user);
 
-        return jsonView;
+        return ResultBean.successPack(user);
     }
 
     @Override
-    public String logout() throws ServiceException {
-        ResultBean jsonView = new ResultBean();
+    public ResultBean logout() {
         Subject subject = SecurityUtils.getSubject();
 
         try {
             subject.logout();
             request.getSession().removeAttribute(Constants.SESSION_KEY_USER);
-            jsonView.successPack("success");
+            return ResultBean.successPack("success");
         } catch (AuthenticationException e) {
-            jsonView.failPack("用户退出异常，请重试");
+            return ResultBean.failPack("用户退出异常，请重试");
         }
-
-        return JSON.toJSONStringWithDateFormat(jsonView, "yyyy-MM-dd HH:mm:ss");
     }
 
     @Override
-    public String getCurrentUserPermissions() throws ServiceException {
+    public ResultBean getCurrentUserPermissions() {
         User user = (User) request.getSession().getAttribute(Constants.SESSION_KEY_USER);
 
         return restTemplate.getForObject(
                 RestUtils.getCAServerUrl("/public/permission/getAllByLoginName?loginName={loginName}"),
-                String.class,
+                ResultBean.class,
                 user.getLoginName());
     }
 
     @Override
-    public String getCurrentUser() throws ServiceException {
-        ResultBean jsonView = new ResultBean();
+    public ResultBean getCurrentUser() {
         User user = (User) request.getSession().getAttribute(Constants.SESSION_KEY_USER);
 
         if (user != null) {
-            jsonView.successPack(user);
+            return ResultBean.successPack(user);
+        } else {
+            return ResultBean.failPackWithMessage("Not Login!");
         }
-
-        return JSON.toJSONStringWithDateFormat(jsonView, "yyyy-MM-dd HH:mm:ss");
     }
 
     @Override
-    public String getCurrentUserPermissionsTree() throws ServiceException {
+    public ResultBean getCurrentUserPermissionsTree() {
         User user = (User) request.getSession().getAttribute(Constants.SESSION_KEY_USER);
 
         return restTemplate.getForObject(
                 RestUtils.getCAServerUrl("/public/permission/getAllForTreeByLoginName?loginName={loginName}&appCode={appCode}"),
-                String.class,
+                ResultBean.class,
                 user.getLoginName(),
                 Constants.APP_CODE);
     }

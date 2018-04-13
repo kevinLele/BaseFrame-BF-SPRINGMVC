@@ -1,5 +1,6 @@
 package com.hq.cloudplatform.baseframe.restful.view;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hq.cloudplatform.baseframe.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -25,6 +26,7 @@ public class User extends BaseEntity {
 
     private String loginIp;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date lastLoginDate;
 
     private Organization organization;
@@ -33,6 +35,7 @@ public class User extends BaseEntity {
 
     private Integer isLock;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date loceDate;
 
     private Integer tryCount;

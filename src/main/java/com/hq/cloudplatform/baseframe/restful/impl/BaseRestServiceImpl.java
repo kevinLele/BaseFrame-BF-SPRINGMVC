@@ -1,9 +1,9 @@
 package com.hq.cloudplatform.baseframe.restful.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.hq.cloudplatform.baseframe.entity.BaseEntity;
 import com.hq.cloudplatform.baseframe.restful.IBaseRestService;
+import com.hq.cloudplatform.baseframe.restful.view.BatchModifyEntity;
 import com.hq.cloudplatform.baseframe.restful.view.Page;
 import com.hq.cloudplatform.baseframe.restful.view.ResultBean;
 import com.hq.cloudplatform.baseframe.service.IBaseService;
@@ -114,11 +114,11 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      * @return
      */
     @Override
-    public ResultBean<Page> getPage(@RequestBody Page page) {
+    public ResultBean<Page<Entity>> getPage(@RequestBody Page page) {
         return getPage(page, "getCount", "findByPage");
     }
 
-    protected ResultBean<Page> getPage(Page page, String countFunc, String pageFunc) {
+    protected ResultBean<Page<Entity>> getPage(Page page, String countFunc, String pageFunc) {
         try {
             return ResultBean.successPack(this.getService().findByPage(page, countFunc, pageFunc));
         } catch (UnauthorizedException unauthorizedException) {
@@ -394,12 +394,10 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
     }
 
     @Override
-    public ResultBean<Boolean> batchModify(@RequestBody JSONObject jsonObject) {
+    public ResultBean<Boolean> batchModify(@RequestBody BatchModifyEntity<Entity> batchModifyEntity) {
         try {
-            String entityJsonStr = jsonObject.getString("entity");
-            String idListJsonStr = jsonObject.getString("idList");
-            Entity entity = JSON.parseObject(entityJsonStr, this.getEntityClass());
-            List<String> idList = JSON.parseArray(idListJsonStr, String.class);
+            Entity entity = batchModifyEntity.getEntity();
+            List<String> idList = batchModifyEntity.getIdList();
 
             if (entity != null && idList != null) {
                 return ResultBean.successPack(this.getService().batchUpdate(entity, idList));
@@ -415,7 +413,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
                 message = "批量更新数据失败！";
             }
 
-            log.error("BaseRestServiceImpl batchModify is error,{jsonStr:" + JSON.toJSONString(jsonObject) + "}," + e.getMessage(), e);
+            log.error("BaseRestServiceImpl batchModify is error,{batchModifyEntity:" + JSON.toJSONString(batchModifyEntity) + "}," + e.getMessage(), e);
             return ResultBean.failPackMessage(false, message);
         }
     }

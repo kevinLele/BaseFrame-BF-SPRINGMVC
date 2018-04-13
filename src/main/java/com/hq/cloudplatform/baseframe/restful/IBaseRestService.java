@@ -1,8 +1,8 @@
 package com.hq.cloudplatform.baseframe.restful;
 
-import com.alibaba.fastjson.JSONObject;
-import com.hq.cloudplatform.baseframe.restful.view.ResultBean;
+import com.hq.cloudplatform.baseframe.restful.view.BatchModifyEntity;
 import com.hq.cloudplatform.baseframe.restful.view.Page;
+import com.hq.cloudplatform.baseframe.restful.view.ResultBean;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +25,7 @@ public interface IBaseRestService<Entity> {
             value = "/getPage",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    ResultBean<Page> getPage(Page page);
+    ResultBean<Page<Entity>> getPage(Page page);
 
     /**
      * 获取所有数据
@@ -178,12 +178,12 @@ public interface IBaseRestService<Entity> {
     /**
      * 批量修改
      *
-     * @param jsonObject
+     * @param batchModifyEntity
      * @return
      */
     @PostMapping(
             value = "/batchModify",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    ResultBean<Boolean> batchModify(JSONObject jsonObject);
+    ResultBean<Boolean> batchModify(BatchModifyEntity<Entity> batchModifyEntity);
 }

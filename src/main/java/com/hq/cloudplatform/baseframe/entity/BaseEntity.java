@@ -1,5 +1,7 @@
 package com.hq.cloudplatform.baseframe.entity;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 
 /**
@@ -7,26 +9,37 @@ import java.util.Date;
  */
 public class BaseEntity {
 
+    @ApiModelProperty(value = "主键ID 字段类型: varchar 长度: 32")
     private String id;
 
+    @ApiModelProperty(value = "创建时间 字段类型: datetime")
     private Date createDate;
 
+    @ApiModelProperty(value = "创建者的姓名 字段类型: varchar 长度: 30")
     private String creator;
 
+    @ApiModelProperty(value = "创建者的ID 字段类型: varchar 长度: 32")
     private String creatorId;
 
+    @ApiModelProperty(value = "最后修改时间 字段类型: datetime")
     private Date updateDate;
 
+    @ApiModelProperty(value = "修改者的姓名 字段类型: varchar 长度: 30")
     private String updater;
 
+    @ApiModelProperty(value = "修改者的ID 字段类型: varchar 长度: 32")
     private String updaterId;
 
+    @ApiModelProperty(value = "是否删除 字段类型: int 说明: 0表示未删除、1表示已删除")
     private String isDelete;
 
+    @ApiModelProperty(value = "删除时间（逻辑删除） 字段类型: datetime")
     private Date deleteDate;
 
+    @ApiModelProperty(value = "删除者的姓名 字段类型: varchar 长度: 30")
     private String deleter;
 
+    @ApiModelProperty(value = "删除者的ID 字段类型: varchar 长度: 32")
     private String deleterId;
 
     public String getId() {

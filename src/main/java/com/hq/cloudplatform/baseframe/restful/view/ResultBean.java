@@ -1,7 +1,7 @@
 package com.hq.cloudplatform.baseframe.restful.view;
 
 
-import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * restful对外的JSON 对象封装
@@ -88,7 +88,7 @@ public class ResultBean<Entity> {
         return content;
     }
 
-    @JSONField(serialize = false)
+    @JsonIgnore
     public String getContentAsStr() {
         if (null == content) {
             return "";
@@ -99,6 +99,28 @@ public class ResultBean<Entity> {
 
     public void setContent(Entity content) {
         this.content = content;
+    }
+
+    public static <Entity> ResultBean<Entity> getInstance(Entity content) {
+        return getInstance(SUCCESS, null, null, content);
+    }
+
+    public static <Entity> ResultBean<Entity> getInstance(String status, Entity content) {
+        return getInstance(status, null, null, content);
+    }
+
+    public static <Entity> ResultBean<Entity> getInstance(String status, String message, Entity content) {
+        return getInstance(status, message, null, content);
+    }
+
+    public static <Entity> ResultBean<Entity> getInstance(String status, String message, String code, Entity content) {
+        ResultBean<Entity> resultBean = new ResultBean<>();
+        resultBean.setStatus(status);
+        resultBean.setMessage(message);
+        resultBean.setCode(code);
+        resultBean.setContent(content);
+
+        return resultBean;
     }
 
     public static <Entity> ResultBean successPack(Entity content) {
@@ -129,9 +151,26 @@ public class ResultBean<Entity> {
         return resultBean;
     }
 
-    public static <Entity> ResultBean failPack(String errMsg) {
+    public static <Entity> ResultBean failPack(Entity content) {
+        ResultBean<Entity> resultBean = new ResultBean<>();
+        resultBean.setContent(content);
+        resultBean.setStatus(FAIL);
+
+        return resultBean;
+    }
+
+    public static <Entity> ResultBean failPackWithMessage(String errMsg) {
         ResultBean<Entity> resultBean = new ResultBean<>();
         resultBean.setMessage(errMsg);
+        resultBean.setStatus(FAIL);
+
+        return resultBean;
+    }
+
+    public static <Entity> ResultBean failPackWithMessage(String errMsg, Entity content) {
+        ResultBean<Entity> resultBean = new ResultBean<>();
+        resultBean.setMessage(errMsg);
+        resultBean.setContent(content);
         resultBean.setStatus(FAIL);
 
         return resultBean;
@@ -164,23 +203,5 @@ public class ResultBean<Entity> {
 
         return resultBean;
     }
-
-    public static <Entity> ResultBean failPack(Entity content) {
-        ResultBean<Entity> resultBean = new ResultBean<>();
-        resultBean.setContent(content);
-        resultBean.setStatus(FAIL);
-
-        return resultBean;
-    }
-
-    public static <Entity> ResultBean failPackMessage(Entity content, String errMsg) {
-        ResultBean<Entity> resultBean = new ResultBean<>();
-        resultBean.setMessage(errMsg);
-        resultBean.setContent(content);
-        resultBean.setStatus(FAIL);
-
-        return resultBean;
-    }
-
 
 }

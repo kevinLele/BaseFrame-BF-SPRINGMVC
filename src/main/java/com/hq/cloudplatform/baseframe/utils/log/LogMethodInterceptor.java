@@ -1,6 +1,6 @@
 package com.hq.cloudplatform.baseframe.utils.log;
 
-import com.alibaba.fastjson.JSON;
+import com.hq.cloudplatform.baseframe.utils.json.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
@@ -15,7 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 
 /**
- * Created by Administrator on 7/4/2017.
+ * @author Administrator
+ * @date 7/4/2017
  */
 @Slf4j
 public class LogMethodInterceptor implements MethodInterceptor {
@@ -99,7 +100,7 @@ public class LogMethodInterceptor implements MethodInterceptor {
             if (isPrimite(value.getClass())) {
                 buffer.append(value + "  ,");
             } else {
-                buffer.append(JSON.toJSONString(value) + "  ,");
+                buffer.append(JacksonUtil.toJSONString(value) + "  ,");
             }
         }
 

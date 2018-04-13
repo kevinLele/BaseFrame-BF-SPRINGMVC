@@ -1,10 +1,10 @@
 package com.hq.cloudplatform.baseframe.sys.filter;
 
-import com.alibaba.fastjson.JSON;
 import com.hq.cloudplatform.baseframe.restful.view.ResultBean;
 import com.hq.cloudplatform.baseframe.restful.view.User;
 import com.hq.cloudplatform.baseframe.sys.Constants;
 import com.hq.cloudplatform.baseframe.utils.ConfigHelper;
+import com.hq.cloudplatform.baseframe.utils.json.JacksonUtil;
 import com.hq.cloudplatform.baseframe.utils.rest.RestUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.util.regex.Pattern;
 
 /**
- *
  * @author Administrator
  * @date 2015/11/26 0026
  */
@@ -67,7 +66,7 @@ public class LoginFilter implements Filter {
                     RestUtils.getCAServerUrl("/public/user/getByLoginName?loginName={loginName}"),
                     ResultBean.class,
                     username);
-            user = JSON.parseObject(jsonObj.getContentAsStr(), User.class);
+            user = JacksonUtil.parseObject(jsonObj.getContentAsStr(), User.class);
             session.setAttribute(Constants.SESSION_KEY_USER, user);
 
             //通过模拟登陆操作实现shiro的登陆

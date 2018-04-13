@@ -1,5 +1,6 @@
 package com.hq.cloudplatform.baseframe.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
@@ -13,6 +14,7 @@ public class BaseEntity {
     private String id;
 
     @ApiModelProperty(value = "创建时间 字段类型: datetime")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createDate;
 
     @ApiModelProperty(value = "创建者的姓名 字段类型: varchar 长度: 30")
@@ -22,6 +24,7 @@ public class BaseEntity {
     private String creatorId;
 
     @ApiModelProperty(value = "最后修改时间 字段类型: datetime")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateDate;
 
     @ApiModelProperty(value = "修改者的姓名 字段类型: varchar 长度: 30")
@@ -34,6 +37,7 @@ public class BaseEntity {
     private String isDelete;
 
     @ApiModelProperty(value = "删除时间（逻辑删除） 字段类型: datetime")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date deleteDate;
 
     @ApiModelProperty(value = "删除者的姓名 字段类型: varchar 长度: 30")

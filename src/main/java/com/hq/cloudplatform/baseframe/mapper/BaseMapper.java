@@ -15,17 +15,17 @@ public interface BaseMapper<Entity> {
 
     void deleteByWhere(Map<String, Object> map);
 
-    void deleteById(String id);
+    void deleteById(@Param("id") String id);
 
-    void logicDeleteById(String id);
+    void logicDeleteById(@Param("id") String id);
 
     void batchDelete(@Param("idList") List<String> idList);
 
     void logicBatchDelete(@Param("idList") List<String> idList);
 
-    Entity findById(String id);
+    Entity findById(@Param("id") String id);
 
-    Entity findByName(String name);
+    Entity findByName(@Param("name") String name);
 
     List<Entity> findAll();
 

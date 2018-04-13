@@ -1,6 +1,5 @@
 package com.hq.cloudplatform.baseframe.utils.dictionary;
 
-import com.alibaba.fastjson.JSONObject;
 import com.hq.cloudplatform.baseframe.restful.view.Page;
 import com.hq.cloudplatform.baseframe.service.IDictionaryService;
 import com.hq.cloudplatform.baseframe.utils.dictionary.annotation.DictionaryField;
@@ -14,6 +13,7 @@ import org.springframework.context.annotation.Lazy;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 7/4/2017.
@@ -146,11 +146,11 @@ public class DictionaryTransitionInterceptor implements MethodInterceptor {
             return dictCode;
         }
 
-        JSONObject dicJson = dictionaryService.getDictionaryByCode(parentCode.trim(), dictCode.trim());
+        Map<String, String> dicJson = dictionaryService.getDictionaryByCode(parentCode.trim(), dictCode.trim());
 
         //存在该数据字典信息
         if (null != dicJson) {
-            String dicName = dicJson.getString("name");
+            String dicName = dicJson.get("name");
 
             if (StringUtils.isNotBlank(dicName)) {
                 return dicName;

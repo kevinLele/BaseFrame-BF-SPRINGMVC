@@ -1,6 +1,6 @@
 package com.hq.cloudplatform.baseframe.service;
 
-import com.alibaba.fastjson.JSONObject;
+import java.util.Map;
 
 public interface IDictionaryService {
 
@@ -11,5 +11,5 @@ public interface IDictionaryService {
      * @param code
      * @return
      */
-    JSONObject getDictionaryByCode(String parentCode, String code);
+    Map<String, String> getDictionaryByCode(String parentCode, String code);
 }

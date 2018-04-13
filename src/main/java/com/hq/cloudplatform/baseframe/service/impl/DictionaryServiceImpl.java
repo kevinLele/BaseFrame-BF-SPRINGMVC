@@ -1,11 +1,12 @@
 package com.hq.cloudplatform.baseframe.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import com.hq.cloudplatform.baseframe.service.IDictionaryService;
 import com.hq.cloudplatform.baseframe.sys.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service("dictionaryService")
 @Slf4j
@@ -21,7 +22,7 @@ public class DictionaryServiceImpl implements IDictionaryService {
     @Override
     @Cacheable(value = Constants.Caches.DICTIONARY_CACHE,
             key = "'dic_' + #parentCode + '_' + #code")
-    public JSONObject getDictionaryByCode(String parentCode, String code) {
+    public Map<String, String> getDictionaryByCode(String parentCode, String code) {
         // 该方法只是用于声明从缓存获取数据字典信息, 所以直接返回null即可
         // 调用该方法所返回的结果为空说明没有在缓存服务器找到相应的信息
         StringBuffer msg = new StringBuffer();

@@ -1,12 +1,12 @@
 package com.hq.cloudplatform.baseframe.restful.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.hq.cloudplatform.baseframe.entity.BaseEntity;
 import com.hq.cloudplatform.baseframe.restful.IBaseRestService;
 import com.hq.cloudplatform.baseframe.restful.view.BatchModifyEntity;
 import com.hq.cloudplatform.baseframe.restful.view.Page;
 import com.hq.cloudplatform.baseframe.restful.view.ResultBean;
 import com.hq.cloudplatform.baseframe.service.IBaseService;
+import com.hq.cloudplatform.baseframe.utils.json.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.UnauthorizedException;
@@ -65,8 +65,8 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
         } catch (UnauthorizedException unauthorizedException) {
             return ResultBean.unauthorizedPack();
         } catch (Exception e) {
-            log.error("BaseRestServiceImpl isExist is error,{jsonStr:" + JSON.toJSONString(mapBean) + "}", e);
-            return ResultBean.failPack(JSON.toJSONString(flag));
+            log.error("BaseRestServiceImpl isExist is error, {mapBean:" + JacksonUtil.toJSONString(mapBean) + "}", e);
+            return ResultBean.failPack(JacksonUtil.toJSONString(flag));
         }
     }
 
@@ -125,7 +125,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
             return ResultBean.unauthorizedPack();
         } catch (Exception e) {
             log.error("BaseRestServiceImpl getPage is error,{Page:"
-                    + JSON.toJSONString(page) + ",countFunc:" + countFunc + ",pageFunc:" + pageFunc + "}", e);
+                    + JacksonUtil.toJSONString(page) + ", countFunc:" + countFunc + ", pageFunc:" + pageFunc + "}", e);
             return ResultBean.failPack(e);
         }
     }
@@ -166,14 +166,14 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
             if (list.size() != 0) {
                 return ResultBean.successPack(list);
             } else {
-                return ResultBean.failPack("fail");
+                return ResultBean.failPackWithMessage("Not found!");
             }
 
         } catch (UnauthorizedException unauthorizedException) {
             return ResultBean.unauthorizedPack();
         } catch (Exception e) {
-            log.error("BaseRestServiceImpl getByWhere is error，{jsonStr:"
-                    + JSON.toJSONString(mapBean) + ",mapperFunc:" + mapperFunc + "}", e);
+            log.error("BaseRestServiceImpl getByWhere is error, {mapBean:"
+                    + JacksonUtil.toJSONString(mapBean) + ", mapperFunc:" + mapperFunc + "}", e);
             return ResultBean.failPack(e);
         }
     }
@@ -191,7 +191,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
                 Entity entity = this.getService().findById(id);
                 return ResultBean.successPack(entity);
             } else {
-                return ResultBean.failPackMessage("undefined", "Id can't be null!");
+                return ResultBean.failPackWithMessage("Id can't be null!");
             }
         } catch (UnauthorizedException unauthorizedException) {
             return ResultBean.unauthorizedPack();
@@ -217,12 +217,12 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
                 Entity entity = this.getService().findByName(name);
                 return ResultBean.successPack(entity);
             } else {
-                return ResultBean.failPackMessage("undefined", "Name can't be null!");
+                return ResultBean.failPackWithMessage("Name can't be null!");
             }
         } catch (UnauthorizedException unauthorizedException) {
             return ResultBean.unauthorizedPack();
         } catch (Exception e) {
-            log.error("BaseRestServiceImpl getByName is error,{id:" + name + "}", e);
+            log.error("BaseRestServiceImpl getByName is error,{name:" + name + "}", e);
             return ResultBean.failPack(e);
         }
     }
@@ -246,7 +246,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
             return ResultBean.unauthorizedPack();
         } catch (Exception e) {
             log.error("BaseRestServiceImpl removeById is error,{Id:" + id + "}", e);
-            return ResultBean.failPack(JSON.toJSONString(flag));
+            return ResultBean.failPack(JacksonUtil.toJSONString(flag));
         }
     }
 
@@ -269,7 +269,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
         } catch (UnauthorizedException unauthorizedException) {
             return ResultBean.unauthorizedPack();
         } catch (Exception e) {
-            log.error("BaseRestServiceImpl batchRemove is error," + JSON.toJSONString(idList), e);
+            log.error("BaseRestServiceImpl batchRemove is error, {idList:" + JacksonUtil.toJSONString(idList) + "}", e);
             return ResultBean.failPack(e);
         }
     }
@@ -289,7 +289,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
         } catch (UnauthorizedException unauthorizedException) {
             return ResultBean.unauthorizedPack();
         } catch (Exception e) {
-            log.error("BaseRestServiceImpl removeFromDbById is error,{Id:" + id + "}", e);
+            log.error("BaseRestServiceImpl removeFromDbById is error, {Id:" + id + "}", e);
             return ResultBean.failPack(e);
         }
     }
@@ -306,7 +306,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
         } catch (UnauthorizedException unauthorizedException) {
             return ResultBean.unauthorizedPack();
         } catch (Exception e) {
-            log.error("BaseRestServiceImpl batchRemoveFromDb is error," + JSON.toJSONString(idList), e);
+            log.error("BaseRestServiceImpl batchRemoveFromDb is error, {idList:" + JacksonUtil.toJSONString(idList) + "}", e);
             return ResultBean.failPack(e);
         }
     }
@@ -324,7 +324,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
         } catch (UnauthorizedException unauthorizedException) {
             return ResultBean.unauthorizedPack();
         } catch (Exception e) {
-            log.error("BaseRestServiceImpl removeByWhere is error，{jsonStr:" + JSON.toJSONString(mapBean) + "}", e);
+            log.error("BaseRestServiceImpl removeByWhere is error, {mapBean:" + JacksonUtil.toJSONString(mapBean) + "}", e);
             return ResultBean.failPack(e);
         }
     }
@@ -352,14 +352,8 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
         } catch (UnauthorizedException unauthorizedException) {
             return ResultBean.unauthorizedPack();
         } catch (Exception e) {
-            String message = e.getMessage();
-
-            if (StringUtils.isBlank(message)) {
-                message = "保存数据失败！";
-            }
-
-            log.error("BaseRestServiceImpl save is error,{jsonStr:" + JSON.toJSONString(entity) + "}," + e.getMessage(), e);
-            return ResultBean.failPackMessage("false", message);
+            log.error("BaseRestServiceImpl save is error, {entity:" + JacksonUtil.toJSONString(entity) + "}," + e.getMessage(), e);
+            return ResultBean.failPack(e);
         }
     }
 
@@ -382,14 +376,8 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
         } catch (UnauthorizedException unauthorizedException) {
             return ResultBean.unauthorizedPack();
         } catch (Exception e) {
-            String message = e.getMessage();
-
-            if (StringUtils.isBlank(message)) {
-                message = "更新数据失败！";
-            }
-
-            log.error("BaseRestServiceImpl modify is error,{jsonStr:" + JSON.toJSONString(entity) + "}," + e.getMessage(), e);
-            return ResultBean.failPackMessage(false, message);
+            log.error("BaseRestServiceImpl modify is error, {entity:" + JacksonUtil.toJSONString(entity) + "}," + e.getMessage(), e);
+            return ResultBean.failPack(e);
         }
     }
 
@@ -407,14 +395,8 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
         } catch (UnauthorizedException unauthorizedException) {
             return ResultBean.unauthorizedPack();
         } catch (Exception e) {
-            String message = e.getMessage();
-
-            if (StringUtils.isBlank(message)) {
-                message = "批量更新数据失败！";
-            }
-
-            log.error("BaseRestServiceImpl batchModify is error,{batchModifyEntity:" + JSON.toJSONString(batchModifyEntity) + "}," + e.getMessage(), e);
-            return ResultBean.failPackMessage(false, message);
+            log.error("BaseRestServiceImpl batchModify is error, {batchModifyEntity:" + JacksonUtil.toJSONString(batchModifyEntity) + "}," + e.getMessage(), e);
+            return ResultBean.failPack(e);
         }
     }
 

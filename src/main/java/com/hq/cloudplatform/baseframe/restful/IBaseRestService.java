@@ -3,6 +3,7 @@ package com.hq.cloudplatform.baseframe.restful;
 import com.hq.cloudplatform.baseframe.restful.view.BatchModifyEntity;
 import com.hq.cloudplatform.baseframe.restful.view.Page;
 import com.hq.cloudplatform.baseframe.restful.view.ResultBean;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,7 @@ public interface IBaseRestService<Entity> {
             value = "/getPage",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "分页查询")
     ResultBean<Page<Entity>> getPage(Page<Entity> page);
 
     /**
@@ -35,6 +37,7 @@ public interface IBaseRestService<Entity> {
     @GetMapping(
             value = "/getAll",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "查询所有")
     ResultBean<List<Entity>> getAll();
 
     /**
@@ -48,6 +51,7 @@ public interface IBaseRestService<Entity> {
             value = "/getByWhere",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "根据传入的参数进行查询")
     ResultBean<List<Entity>> getByWhere(Map<String, Object> mapBean);
 
     /**
@@ -60,6 +64,7 @@ public interface IBaseRestService<Entity> {
     @GetMapping(
             value = "/getById",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "根据实体ID进行查询")
     ResultBean<Entity> getById(String id);
 
     /**
@@ -72,6 +77,7 @@ public interface IBaseRestService<Entity> {
     @GetMapping(
             value = "/getByName",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "根据名称进行查询", notes = "如果记实体没有name字段请忽略该接口")
     ResultBean<Entity> getByName(String name);
 
     /**
@@ -85,6 +91,7 @@ public interface IBaseRestService<Entity> {
             value = "/isExist",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "检查实体是否存在")
     ResultBean<Boolean> isExist(Map<String, Object> mapBean);
 
     /**
@@ -97,6 +104,7 @@ public interface IBaseRestService<Entity> {
     @GetMapping(
             value = "/removeById",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "根据实体ID进行删除操作", notes = "该操作只进行逻辑删除，如需进行物理删除请使用removeFromDbById接口")
     ResultBean<Boolean> removeById(String id);
 
     /**
@@ -110,6 +118,7 @@ public interface IBaseRestService<Entity> {
             value = "/batchRemove",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "根据实体ID列表进行批量删除操作", notes = "该操作只进行逻辑删除，如需进行物理删除请使用batchRemoveFromDb接口")
     ResultBean<Boolean> batchRemove(List<String> idList);
 
     /**
@@ -122,6 +131,7 @@ public interface IBaseRestService<Entity> {
     @GetMapping(
             value = "/removeFromDbById",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "根据实体ID进行删除操作", notes = "该操作将进行物理删除，如需进行逻辑删除请使用removeById接口")
     ResultBean<Boolean> removeFromDbById(String id);
 
     /**
@@ -135,6 +145,7 @@ public interface IBaseRestService<Entity> {
             value = "/batchRemoveFromDb",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "根据实体ID列表进行批量删除操作", notes = "该操作将进行物理删除，如需进行物理删除请使用batchRemove接口")
     ResultBean<Boolean> batchRemoveFromDb(List<String> idList);
 
     /**
@@ -147,6 +158,7 @@ public interface IBaseRestService<Entity> {
             value = "/removeByWhere",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "根据传入的参数进行删除操作", notes = "该操作将进行物理删除，如需进行逻辑删除请使用removeById接口")
     ResultBean<Boolean> removeByWhere(Map<String, Object> mapBean);
 
     /**
@@ -160,6 +172,7 @@ public interface IBaseRestService<Entity> {
             value = "/save",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "保存实体信息", notes = "即将实体信息进行入库")
     ResultBean<String> save(Entity entity);
 
     /**
@@ -173,6 +186,7 @@ public interface IBaseRestService<Entity> {
             value = "/modify",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "修改实体信息")
     ResultBean<Boolean> modify(Entity entity);
 
     /**
@@ -185,5 +199,6 @@ public interface IBaseRestService<Entity> {
             value = "/batchModify",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "批量修改实体信息")
     ResultBean<Boolean> batchModify(BatchModifyEntity<Entity> batchModifyEntity);
 }

@@ -25,7 +25,7 @@ public interface IBaseRestService<Entity> {
             value = "/getPage",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    ResultBean<Page<Entity>> getPage(Page page);
+    ResultBean<Page<Entity>> getPage(Page<Entity> page);
 
     /**
      * 获取所有数据

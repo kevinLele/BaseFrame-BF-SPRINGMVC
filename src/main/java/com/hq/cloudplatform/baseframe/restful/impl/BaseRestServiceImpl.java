@@ -114,11 +114,11 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      * @return
      */
     @Override
-    public ResultBean<Page<Entity>> getPage(@RequestBody Page page) {
+    public ResultBean<Page<Entity>> getPage(@RequestBody Page<Entity> page) {
         return getPage(page, "getCount", "findByPage");
     }
 
-    protected ResultBean<Page<Entity>> getPage(Page page, String countFunc, String pageFunc) {
+    protected ResultBean<Page<Entity>> getPage(Page<Entity> page, String countFunc, String pageFunc) {
         try {
             return ResultBean.successPack(this.getService().findByPage(page, countFunc, pageFunc));
         } catch (UnauthorizedException unauthorizedException) {

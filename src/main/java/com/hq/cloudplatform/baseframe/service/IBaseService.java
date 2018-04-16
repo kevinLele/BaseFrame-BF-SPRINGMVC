@@ -11,6 +11,8 @@ import java.util.Map;
  */
 public interface IBaseService<Entity> {
 
+    String generateUUID();
+
     Page findByPage(Page<Entity> page, String countMapperFunc, String pageMapperFunc) throws ServiceException;
 
     String save(Entity entity) throws ServiceException;

@@ -42,23 +42,15 @@ public class LogMethodInterceptor implements MethodInterceptor {
      * @param args
      */
     public void printMethodParams(Class cls, Method method, Object[] args) {
+        //获取方法参数名称
+        String[] paramNames = getFieldsName(method);
+
         //定义目标类的日志
+        log.info("-------------------------------");
         log.info("clsName = {}", cls.getName());
         log.info("methodName = {}", method.getName());
-
-        try {
-            /**
-             * 获取方法参数名称
-             */
-            String[] paramNames = getFieldsName(method);
-
-            /**
-             * 打印方法的参数名和参数值
-             */
-            logParam(log, paramNames, args);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        logParam(log, paramNames, args);
+        log.info("-------------------------------");
     }
 
     /**
@@ -68,9 +60,8 @@ public class LogMethodInterceptor implements MethodInterceptor {
      * @return
      * @throws Exception
      */
-    private String[] getFieldsName(Method method) throws Exception {
-        ParameterNameDiscoverer parameterNameDiscoverer =
-                new LocalVariableTableParameterNameDiscoverer();
+    private String[] getFieldsName(Method method) {
+        ParameterNameDiscoverer parameterNameDiscoverer = new LocalVariableTableParameterNameDiscoverer();
 
         return parameterNameDiscoverer.getParameterNames(method);
     }
@@ -102,6 +93,11 @@ public class LogMethodInterceptor implements MethodInterceptor {
             } else {
                 buffer.append(JacksonUtil.toJSONString(value) + "  ,");
             }
+        }
+
+        if (buffer.length() > 0) {
+            //去掉最后一个多余的逗号
+            buffer.deleteCharAt(buffer.length() - 1);
         }
 
         log.info(buffer.toString());

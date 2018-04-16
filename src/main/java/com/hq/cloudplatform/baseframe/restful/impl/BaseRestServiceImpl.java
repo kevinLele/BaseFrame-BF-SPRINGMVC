@@ -2,7 +2,6 @@ package com.hq.cloudplatform.baseframe.restful.impl;
 
 import com.hq.cloudplatform.baseframe.entity.BaseEntity;
 import com.hq.cloudplatform.baseframe.exception.CheckException;
-import com.hq.cloudplatform.baseframe.exception.ServiceException;
 import com.hq.cloudplatform.baseframe.restful.IBaseRestService;
 import com.hq.cloudplatform.baseframe.restful.view.BatchModifyEntity;
 import com.hq.cloudplatform.baseframe.restful.view.Page;
@@ -51,7 +50,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      * @return
      */
     @Override
-    public ResultBean<Boolean> isExist(@RequestBody Map<String, Object> mapBean) throws ServiceException {
+    public ResultBean<Boolean> isExist(@RequestBody Map<String, Object> mapBean) {
         boolean flag = false;
         List<Entity> entityList = this.getService().findByMap(mapBean, "findByMap");
 
@@ -106,11 +105,11 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      * @return
      */
     @Override
-    public ResultBean<Page<Entity>> getPage(@RequestBody Page<Entity> page) throws ServiceException {
+    public ResultBean<Page<Entity>> getPage(@RequestBody Page<Entity> page) {
         return getPage(page, "getCount", "findByPage");
     }
 
-    protected ResultBean<Page<Entity>> getPage(Page<Entity> page, String countFunc, String pageFunc) throws ServiceException {
+    protected ResultBean<Page<Entity>> getPage(Page<Entity> page, String countFunc, String pageFunc) {
         return ResultBean.successPack(this.getService().findByPage(page, countFunc, pageFunc));
     }
 
@@ -120,7 +119,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      * @return
      */
     @Override
-    public ResultBean<List<Entity>> getAll() throws ServiceException {
+    public ResultBean<List<Entity>> getAll() {
         return ResultBean.successPack(this.getService().findAll());
     }
 
@@ -131,11 +130,11 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      * @return
      */
     @Override
-    public ResultBean<List<Entity>> getByWhere(@RequestBody Map<String, Object> mapBean) throws ServiceException {
+    public ResultBean<List<Entity>> getByWhere(@RequestBody Map<String, Object> mapBean) {
         return getByWhere(mapBean, "findByMap");
     }
 
-    protected ResultBean<List<Entity>> getByWhere(Map<String, Object> mapBean, String mapperFunc) throws ServiceException {
+    protected ResultBean<List<Entity>> getByWhere(Map<String, Object> mapBean, String mapperFunc) {
         return ResultBean.successPack(this.getService().findByMap(mapBean, mapperFunc));
     }
 
@@ -146,7 +145,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      * @return
      */
     @Override
-    public ResultBean<Entity> getById(@RequestParam("id") String id) throws ServiceException {
+    public ResultBean<Entity> getById(@RequestParam("id") String id) {
         if (StringUtils.isNotBlank(id)) {
             return ResultBean.successPack(this.getService().findById(id));
         } else {
@@ -162,7 +161,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      * @return
      */
     @Override
-    public ResultBean<Entity> getByName(@RequestParam("name") String name) throws ServiceException {
+    public ResultBean<Entity> getByName(@RequestParam("name") String name) {
         if (StringUtils.isNotBlank(name)) {
             return ResultBean.successPack(this.getService().findByName(name));
         } else {
@@ -178,7 +177,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      * @return
      */
     @Override
-    public ResultBean<Boolean> removeById(@RequestParam("id") String id) throws ServiceException {
+    public ResultBean<Boolean> removeById(@RequestParam("id") String id) {
         return ResultBean.successPack(this.getService().logicDeleteById(id));
     }
 
@@ -190,7 +189,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      * @return
      */
     @Override
-    public ResultBean<Boolean> batchRemove(@RequestBody List<String> idList) throws ServiceException {
+    public ResultBean<Boolean> batchRemove(@RequestBody List<String> idList) {
         if (idList == null || idList.size() <= 0) {
             throw new CheckException("id列表为空");
         } else {
@@ -207,13 +206,13 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      * @return
      */
     @Override
-    public ResultBean<Boolean> removeFromDbById(@RequestParam("id") String id) throws ServiceException {
+    public ResultBean<Boolean> removeFromDbById(@RequestParam("id") String id) {
         //物理删除
         return ResultBean.successPack(this.getService().deleteById(id));
     }
 
     @Override
-    public ResultBean<Boolean> batchRemoveFromDb(@RequestBody List<String> idList) throws ServiceException {
+    public ResultBean<Boolean> batchRemoveFromDb(@RequestBody List<String> idList) {
         if (idList == null || idList.size() <= 0) {
             throw new CheckException("id列表为空");
         } else {
@@ -229,7 +228,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      * @return
      */
     @Override
-    public ResultBean<Boolean> removeByWhere(@RequestBody Map<String, Object> mapBean) throws ServiceException {
+    public ResultBean<Boolean> removeByWhere(@RequestBody Map<String, Object> mapBean) {
         return ResultBean.successPack(this.getService().deleteByWhere(mapBean));
     }
 
@@ -240,7 +239,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      * @return
      */
     @Override
-    public ResultBean<String> save(@RequestBody Entity entity) throws ServiceException {
+    public ResultBean<String> save(@RequestBody Entity entity) {
         if (entity != null) {
             return ResultBean.successPack(this.getService().save(entity));
         } else {
@@ -255,7 +254,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      * @return
      */
     @Override
-    public ResultBean<Boolean> modify(@RequestBody Entity entity) throws ServiceException {
+    public ResultBean<Boolean> modify(@RequestBody Entity entity) {
         if (entity != null) {
             return ResultBean.successPack(this.getService().update(entity));
         } else {
@@ -264,7 +263,7 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
     }
 
     @Override
-    public ResultBean<Boolean> batchModify(@RequestBody BatchModifyEntity<Entity> batchModifyEntity) throws ServiceException {
+    public ResultBean<Boolean> batchModify(@RequestBody BatchModifyEntity<Entity> batchModifyEntity) {
         Entity entity = batchModifyEntity.getEntity();
         List<String> idList = batchModifyEntity.getIdList();
 

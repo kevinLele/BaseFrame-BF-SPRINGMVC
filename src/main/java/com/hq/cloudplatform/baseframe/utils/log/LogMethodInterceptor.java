@@ -27,7 +27,7 @@ public class LogMethodInterceptor implements MethodInterceptor {
 
     @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {
-        printMethodParams(invocation.getClass(),
+        printMethodParams(invocation.getThis().getClass(),
                 invocation.getMethod(),
                 invocation.getArguments());
 

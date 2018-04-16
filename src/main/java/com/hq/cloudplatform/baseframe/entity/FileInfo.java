@@ -12,7 +12,11 @@ public class FileInfo extends BaseEntity {
     /**
      * 文件名
      */
-    private String name;
+    private String fileName;
+
+    private String md5;
+
+    private String size;
 
     /**
      * 文件的URL地址
@@ -22,7 +26,7 @@ public class FileInfo extends BaseEntity {
     /**
      * 对应到上传文件的相关信息
      */
-    private UploadFileInfo uploadFileInfo;
+    private UploadFileInfo uploadFileInfo = new UploadFileInfo();
 
     public UploadFileInfo getUploadFileInfo() {
         return uploadFileInfo;
@@ -32,13 +36,28 @@ public class FileInfo extends BaseEntity {
         this.uploadFileInfo = uploadFileInfo;
     }
 
-    public String getName() {
-
-        return name;
+    public String getFileName() {
+        return fileName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getMd5() {
+        return md5;
+    }
+
+    public void setMd5(String md5) {
+        this.md5 = md5;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
     }
 
     public String getUrl() {

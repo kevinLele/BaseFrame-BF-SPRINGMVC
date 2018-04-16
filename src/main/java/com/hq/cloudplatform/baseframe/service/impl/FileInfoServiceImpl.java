@@ -217,7 +217,7 @@ public class FileInfoServiceImpl extends BaseServiceImpl<FileInfo> implements IF
         StringBuffer fileUrl = new StringBuffer();
         fileUrl.append("http://").append(SystemUtils.getLocalHostAddress())
                 .append(":").append(port).append(serverName)
-                .append("/restful/fileDownload/download/")
+                .append("/api/fileDownload/download/")
                 .append(fileId);
 
         return fileUrl.toString();

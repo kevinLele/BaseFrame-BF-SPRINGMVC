@@ -15,6 +15,11 @@ public class FileInfo extends BaseEntity {
     private String name;
 
     /**
+     * 文件的URL地址
+     */
+    private String url;
+
+    /**
      * 对应到上传文件的相关信息
      */
     private UploadFileInfo uploadFileInfo;
@@ -34,5 +39,13 @@ public class FileInfo extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

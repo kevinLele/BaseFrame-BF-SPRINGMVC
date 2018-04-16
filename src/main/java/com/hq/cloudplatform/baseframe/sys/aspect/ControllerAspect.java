@@ -21,7 +21,7 @@ public class ControllerAspect {
 
         try {
             result = (ResultBean<?>) pjp.proceed();
-            log.info("Method: [{}] use time: {}", pjp.getSignature(), System.currentTimeMillis() - startTime);
+            log.info("Method: [{}] use time: {}ms", pjp.getSignature(), System.currentTimeMillis() - startTime);
         } catch (Throwable e) {
             result = handlerException(pjp, e);
         }

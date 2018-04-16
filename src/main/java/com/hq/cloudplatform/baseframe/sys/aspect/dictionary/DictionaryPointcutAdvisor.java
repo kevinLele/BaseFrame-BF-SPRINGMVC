@@ -12,7 +12,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by Administrator on 7/25/2017.
+ * @author Administrator
+ * @date 7/25/2017
  */
 @Slf4j
 public class DictionaryPointcutAdvisor extends StaticMethodMatcherPointcutAdvisor {
@@ -37,12 +38,14 @@ public class DictionaryPointcutAdvisor extends StaticMethodMatcherPointcutAdviso
 
         if (null != returnType && returnType.isAnnotationPresent(HasDictionaryFields.class)) {
             return true;
-        } else if (IBaseService.class.isAssignableFrom(targetClass)) { //只对实现了IBaseService的类进行处理
+        }
+        //只对实现了IBaseService的类进行处理
+        else if (IBaseService.class.isAssignableFrom(targetClass)) {
             // 根据配置的方法名进行过滤
             Matcher matcher = methodPatten.matcher(method.getName());
 
             if (matcher.matches()) {
-                log.info(method.getName() + ":" + targetClass.getName());
+                log.info("{}:{}", method.getName(), targetClass.getName());
                 return matcher.matches();
             }
         }

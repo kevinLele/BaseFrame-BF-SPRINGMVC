@@ -63,43 +63,6 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
 
     /**
      * 分页获取
-     * <p>
-     * 请求参数样例：
-     * {
-     * "pageSize": 10,
-     * "pageNumber": 1,
-     * "conditions": {
-     * "jobNum": "No.113"
-     * }
-     * }
-     * <p>
-     * 响应样例：
-     * {
-     * "content": {
-     * "conditions": {
-     * "jobNum": "No.113"
-     * },
-     * "pageNumber": 1,
-     * "pageSize": 10,
-     * "startRowNum": 0,
-     * "endRowNum": 10,
-     * "total": 1,
-     * "totalPageNum": 1,
-     * "rows": [
-     * {
-     * "id": "C5F0CA07EA864022B1BF072DB4161119",
-     * "jobNum": "No.113",
-     * "loginName": "lisi",
-     * "orgId": "5",
-     * "password": "e10adc3949ba59abbe56e057f20f883e",
-     * "roleList": [],
-     * "username": "李四"
-     * }
-     * ]
-     * },
-     * "message": "",
-     * "status": "success"
-     * }
      *
      * @param page
      * @return

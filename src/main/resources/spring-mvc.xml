@@ -2,12 +2,15 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="
        http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
        http://www.springframework.org/schema/mvc
        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
@@ -23,11 +26,29 @@
         <property name="resolveLazily" value="true"/>
     </bean>
 
+    <!-- 用于支持自定义操作日志的注解 -->
+    <bean id="logMethodInterceptor"
+          class="com.hq.cloudplatform.baseframe.utils.log.LogMethodInterceptor"/>
+    <bean class="com.hq.cloudplatform.baseframe.utils.log.LogPointcutAdvisor">
+        <constructor-arg name="advice" ref="logMethodInterceptor"/>
+        <!-- 只拦截指定的包下的类 -->
+        <constructor-arg name="basePackages">
+            <list>
+                <value>com.hq.cloudplatform.baseframe.restful</value>
+            </list>
+        </constructor-arg>
+    </bean>
+
     <!-- 默认的注解映射的支持 ,它会自动注册DefaultAnnotationHandlerMapping 与AnnotationMethodHandlerAdapter -->
     <mvc:annotation-driven></mvc:annotation-driven>
 
     <!-- enable autowire 向容器自动注册 -->
     <context:annotation-config/>
+
+    <!-- 使用cglib进行动态代理 -->
+    <!-- proxy-target-class:为true表示基于类进行代理，否则只支持接口方式的代理 -->
+    <!-- expose-proxy: 开启暴露Aop代理到ThreadLocal支持,即可以通过AopContext.currentProxy()获取当前代理对象 -->
+    <aop:aspectj-autoproxy proxy-target-class="true" expose-proxy="true"/>
 
     <context:component-scan base-package="com.hq.cloudplatform.baseframe.restful"/>
 

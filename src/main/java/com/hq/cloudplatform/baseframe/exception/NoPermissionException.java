@@ -2,6 +2,8 @@ package com.hq.cloudplatform.baseframe.exception;
 
 /**
  * 无权限异常
+ *
+ * @author Administrator
  */
 public class NoPermissionException extends RuntimeException {
 

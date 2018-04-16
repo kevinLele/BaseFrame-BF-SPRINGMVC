@@ -1,6 +1,8 @@
 package com.hq.cloudplatform.baseframe.entity;
 
 /**
+ * 分片上传的文件信息
+ *
  * @author Administrator
  */
 public class ChunkFileInfo {

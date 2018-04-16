@@ -7,35 +7,40 @@ import org.springframework.context.annotation.Lazy;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
- * Created by Administrator on 7/4/2017.
+ *
+ * @author Administrator
+ * @date 7/4/2017
  */
 public class LogPointcutAdvisor extends StaticMethodMatcherPointcutAdvisor {
 
-    private String basePackage;
+    private List<String> basePackages;
 
     @Autowired
     @Lazy
     private HttpServletRequest request;
 
-    public LogPointcutAdvisor(Advice advice, String basePackage) {
+    public LogPointcutAdvisor(Advice advice, List<String> basePackages) {
         setAdvice(advice);
-        this.basePackage = basePackage;
+        this.basePackages = basePackages;
     }
 
     @Override
     public boolean matches(Method method, Class<?> targetClass) {
-        if(null == targetClass.getPackage()){
+        if (null == targetClass.getPackage()) {
             return false;
         }
 
         String packagePath = targetClass.getPackage().getName();
 
-        if (packagePath.startsWith(basePackage)) {
-            return true;
-        } else {
-            return false;
+        for (String basePkg : basePackages) {
+            if (packagePath.startsWith(basePkg)) {
+                return true;
+            }
         }
+
+        return false;
     }
 }

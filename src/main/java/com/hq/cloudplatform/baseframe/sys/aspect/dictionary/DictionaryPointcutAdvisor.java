@@ -1,7 +1,7 @@
-package com.hq.cloudplatform.baseframe.utils.dictionary;
+package com.hq.cloudplatform.baseframe.sys.aspect.dictionary;
 
 import com.hq.cloudplatform.baseframe.service.IBaseService;
-import com.hq.cloudplatform.baseframe.utils.dictionary.annotation.HasDictionaryFields;
+import com.hq.cloudplatform.baseframe.sys.aspect.dictionary.annotation.HasDictionaryFields;
 import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.aop.Advice;
 import org.apache.commons.lang.StringUtils;

@@ -1,4 +1,4 @@
-package com.hq.cloudplatform.baseframe.utils.validation.annotation;
+package com.hq.cloudplatform.baseframe.sys.aspect.validation.annotation;
 
 import java.lang.annotation.*;
 

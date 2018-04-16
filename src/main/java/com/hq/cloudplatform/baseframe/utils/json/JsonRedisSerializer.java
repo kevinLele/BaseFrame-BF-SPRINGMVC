@@ -1,6 +1,5 @@
-package com.hq.cloudplatform.baseframe.utils;
+package com.hq.cloudplatform.baseframe.utils.json;
 
-import com.hq.cloudplatform.baseframe.utils.json.JacksonUtil;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
 

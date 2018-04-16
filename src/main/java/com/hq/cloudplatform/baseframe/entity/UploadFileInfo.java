@@ -1,6 +1,6 @@
 package com.hq.cloudplatform.baseframe.entity;
 
-import com.hq.cloudplatform.baseframe.utils.validation.annotation.ValidationBean;
+import com.hq.cloudplatform.baseframe.sys.aspect.validation.annotation.ValidationBean;
 
 /**
  * Created by hellowin10 on 2017/7/23.

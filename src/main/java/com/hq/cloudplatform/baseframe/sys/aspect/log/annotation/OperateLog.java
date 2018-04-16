@@ -1,4 +1,4 @@
-package com.hq.cloudplatform.baseframe.utils.log.annotation;
+package com.hq.cloudplatform.baseframe.sys.aspect.log.annotation;
 
 import java.lang.annotation.*;
 

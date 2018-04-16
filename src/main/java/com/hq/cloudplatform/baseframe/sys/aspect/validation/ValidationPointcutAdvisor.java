@@ -1,6 +1,6 @@
-package com.hq.cloudplatform.baseframe.utils.validation;
+package com.hq.cloudplatform.baseframe.sys.aspect.validation;
 
-import com.hq.cloudplatform.baseframe.utils.validation.annotation.ValidationMethod;
+import com.hq.cloudplatform.baseframe.sys.aspect.validation.annotation.ValidationMethod;
 import org.aopalliance.aop.Advice;
 import org.springframework.aop.support.StaticMethodMatcherPointcutAdvisor;
 import org.springframework.beans.factory.annotation.Autowired;

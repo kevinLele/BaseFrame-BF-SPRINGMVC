@@ -1,8 +1,8 @@
-package com.hq.cloudplatform.baseframe.utils.dictionary;
+package com.hq.cloudplatform.baseframe.sys.aspect.dictionary;
 
 import com.hq.cloudplatform.baseframe.restful.view.Page;
 import com.hq.cloudplatform.baseframe.service.IDictionaryService;
-import com.hq.cloudplatform.baseframe.utils.dictionary.annotation.DictionaryField;
+import com.hq.cloudplatform.baseframe.sys.aspect.dictionary.annotation.DictionaryField;
 import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;

@@ -1,4 +1,4 @@
-package com.hq.cloudplatform.baseframe.utils.log;
+package com.hq.cloudplatform.baseframe.sys.aspect.log;
 
 import org.aopalliance.aop.Advice;
 import org.springframework.aop.support.StaticMethodMatcherPointcutAdvisor;

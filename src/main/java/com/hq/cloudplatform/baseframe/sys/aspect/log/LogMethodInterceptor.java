@@ -1,4 +1,4 @@
-package com.hq.cloudplatform.baseframe.utils.log;
+package com.hq.cloudplatform.baseframe.sys.aspect.log;
 
 import com.hq.cloudplatform.baseframe.utils.json.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;

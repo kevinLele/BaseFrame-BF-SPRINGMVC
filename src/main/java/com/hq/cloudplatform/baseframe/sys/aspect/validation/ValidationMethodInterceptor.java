@@ -1,8 +1,8 @@
-package com.hq.cloudplatform.baseframe.utils.validation;
+package com.hq.cloudplatform.baseframe.sys.aspect.validation;
 
 import com.hq.cloudplatform.baseframe.exception.ServiceException;
-import com.hq.cloudplatform.baseframe.utils.validation.annotation.ValidationBean;
-import com.hq.cloudplatform.baseframe.utils.validation.annotation.ValidationField;
+import com.hq.cloudplatform.baseframe.sys.aspect.validation.annotation.ValidationBean;
+import com.hq.cloudplatform.baseframe.sys.aspect.validation.annotation.ValidationField;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.lang.StringUtils;

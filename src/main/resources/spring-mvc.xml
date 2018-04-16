@@ -28,8 +28,8 @@
 
     <!-- 用于支持自定义操作日志的注解 -->
     <bean id="logMethodInterceptor"
-          class="com.hq.cloudplatform.baseframe.utils.log.LogMethodInterceptor"/>
-    <bean class="com.hq.cloudplatform.baseframe.utils.log.LogPointcutAdvisor">
+          class="com.hq.cloudplatform.baseframe.sys.aspect.log.LogMethodInterceptor"/>
+    <bean class="com.hq.cloudplatform.baseframe.sys.aspect.log.LogPointcutAdvisor">
         <constructor-arg name="advice" ref="logMethodInterceptor"/>
         <!-- 只拦截指定的包下的类 -->
         <constructor-arg name="basePackages">
@@ -38,6 +38,15 @@
             </list>
         </constructor-arg>
     </bean>
+
+    <bean id="controllerAspect" class="xxx.common.aop.ControllerAOP" />
+    <aop:config>
+        <aop:aspect id="myAop" ref="controllerAop">
+            <aop:pointcut id="target"
+                          expression="execution(public com.hq.cloudplatform.baseframe.restful.view.ResultBean com.hq.cloudplatform.baseframe.restful..*.*(..))" />
+            <aop:around method="handlerControllerMethod" pointcut-ref="target" />
+        </aop:aspect>
+    </aop:config>
 
     <!-- 默认的注解映射的支持 ,它会自动注册DefaultAnnotationHandlerMapping 与AnnotationMethodHandlerAdapter -->
     <mvc:annotation-driven></mvc:annotation-driven>

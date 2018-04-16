@@ -8,7 +8,7 @@ import com.hq.cloudplatform.baseframe.service.IBaseService;
 import com.hq.cloudplatform.baseframe.utils.BeanObjectToMap;
 import com.hq.cloudplatform.baseframe.utils.IDGenerator;
 import com.hq.cloudplatform.baseframe.utils.SysReflectionUtils;
-import com.hq.cloudplatform.baseframe.utils.validation.annotation.ValidationMethod;
+import com.hq.cloudplatform.baseframe.sys.aspect.validation.annotation.ValidationMethod;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 

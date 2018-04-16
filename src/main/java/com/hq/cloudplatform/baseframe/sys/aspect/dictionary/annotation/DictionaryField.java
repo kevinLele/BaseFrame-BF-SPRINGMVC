@@ -1,4 +1,4 @@
-package com.hq.cloudplatform.baseframe.utils.dictionary.annotation;
+package com.hq.cloudplatform.baseframe.sys.aspect.dictionary.annotation;
 
 import java.lang.annotation.*;
 

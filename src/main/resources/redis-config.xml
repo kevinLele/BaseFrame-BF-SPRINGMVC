@@ -50,7 +50,7 @@
         <property name="valueSerializer">
             <!-- Jdk序列化方式速度优于json的方式,但占用的存储空间比json大,并且不方便调式,因为JDK方式序列化后的字符串不可读 -->
             <!--<bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>-->
-            <bean class="com.hq.cloudplatform.baseframe.utils.JsonRedisSerializer"/>
+            <bean class="com.hq.cloudplatform.baseframe.utils.json.JsonRedisSerializer"/>
         </property>
         <!-- 在hash数据结构中，hash-key的序列化策略 -->
         <property name="hashKeySerializer">
@@ -59,7 +59,7 @@
         <property name="hashValueSerializer">
             <!-- Jdk序列化方式速度优于json的方式,但占用的存储空间比json大,并且不方便调式,因为JDK方式序列化后的字符串不可读 -->
             <!--<bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>-->
-            <bean class="com.hq.cloudplatform.baseframe.utils.JsonRedisSerializer"/>
+            <bean class="com.hq.cloudplatform.baseframe.utils.json.JsonRedisSerializer"/>
         </property>
     </bean>
 

@@ -6,6 +6,7 @@ import com.hq.cloudplatform.baseframe.entity.UploadFileInfo;
 import com.hq.cloudplatform.baseframe.exception.ServiceException;
 import com.hq.cloudplatform.baseframe.service.IFileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 public class FileUploadServiceImpl extends BaseServiceImpl<UploadFileInfo> implements IFileUploadService {
 
     @Autowired
+    @Qualifier("uploadFileInfoDAO")
     private UploadFileInfoDAO uploadFileInfoDAO;
 
     @Override

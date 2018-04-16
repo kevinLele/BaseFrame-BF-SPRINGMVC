@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 /**
  * Created by admin on 2017/3/7.
  */
-@Repository
+@Repository("fileInfoDAO")
 public interface FileInfoDAO extends BaseDAO<FileInfo> {
 
 }

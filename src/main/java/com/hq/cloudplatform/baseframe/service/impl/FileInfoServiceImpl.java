@@ -11,6 +11,7 @@ import com.hq.cloudplatform.baseframe.sys.Constants;
 import com.hq.cloudplatform.baseframe.utils.SystemUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -36,6 +37,7 @@ public class FileInfoServiceImpl extends BaseServiceImpl<FileInfo> implements IF
     public static final String PERCENT_KEY = "percent";
 
     @Autowired
+    @Qualifier("fileInfoDAO")
     private FileInfoDAO fileInfoDAO;
 
     @Autowired

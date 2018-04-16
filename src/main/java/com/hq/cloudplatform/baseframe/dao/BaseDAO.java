@@ -1,11 +1,11 @@
-package com.hq.cloudplatform.baseframe.mapper;
+package com.hq.cloudplatform.baseframe.dao;
 
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
 
-public interface BaseMapper<Entity> {
+public interface BaseDAO<Entity> {
 
     void save(Entity entity);
 

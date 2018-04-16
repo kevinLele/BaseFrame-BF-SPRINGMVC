@@ -2,6 +2,7 @@ package com.hq.cloudplatform.baseframe.restful.view;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hq.cloudplatform.baseframe.utils.json.JacksonUtil;
 
 /**
  * restful对外的JSON 对象封装
@@ -93,7 +94,7 @@ public class ResultBean<Entity> {
         if (null == content) {
             return "";
         } else {
-            return content.toString();
+            return JacksonUtil.toJSONString(content);
         }
     }
 

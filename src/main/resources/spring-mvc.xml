@@ -39,12 +39,12 @@
         </constructor-arg>
     </bean>
 
-    <bean id="controllerAspect" class="xxx.common.aop.ControllerAOP" />
+    <bean id="controllerAspect" class="com.hq.cloudplatform.baseframe.sys.aspect.ControllerAspect"/>
     <aop:config>
-        <aop:aspect id="myAop" ref="controllerAop">
+        <aop:aspect id="controllerAspect" ref="controllerAspect">
             <aop:pointcut id="target"
-                          expression="execution(public com.hq.cloudplatform.baseframe.restful.view.ResultBean com.hq.cloudplatform.baseframe.restful..*.*(..))" />
-            <aop:around method="handlerControllerMethod" pointcut-ref="target" />
+                          expression="execution(public com.hq.cloudplatform.baseframe.restful.view.ResultBean com.hq.cloudplatform.baseframe.restful..*.*(..))"/>
+            <aop:around method="handlerControllerMethod" pointcut-ref="target"/>
         </aop:aspect>
     </aop:config>
 

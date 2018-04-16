@@ -186,7 +186,7 @@
 
     <!-- 事务入口 -->
     <aop:config proxy-target-class="true" expose-proxy="true">
-        <aop:pointcut id="allServiceMethod" expression="execution(* com.hq.cloudplatform.baseframe.service.*.*(..))"/>
+        <aop:pointcut id="allServiceMethod" expression="execution(* com.hq.cloudplatform.baseframe.service..*.*(..))"/>
         <aop:advisor pointcut-ref="allServiceMethod" advice-ref="txAdvice"/>
     </aop:config>
 

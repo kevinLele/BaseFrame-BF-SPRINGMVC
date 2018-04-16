@@ -101,7 +101,7 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
             throw new ServiceException(e.getMessage(), e);
         }
 
-        return id;
+        return entity.getId();
     }
 
     /**

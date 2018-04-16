@@ -14,6 +14,12 @@ public interface Constants {
 
     String SESSION_KEY_USER = "SESSION_USER";
 
+    String UPLOADER_TEMP_DIR = ConfigHelper.getValue("uploader.temp.dir");
+
+    String UPLOADER_PROD_DIR = ConfigHelper.getValue("uploader.prod.dir");
+
+    boolean USE_REDIS = Boolean.parseBoolean(ConfigHelper.getValue("sys.useRedis"));
+
     interface Caches {
 
         String DICTIONARY_CACHE = "dictionary";

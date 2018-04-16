@@ -138,8 +138,8 @@
 
     <!-- 用于支持自定义操作日志的注解 -->
     <bean id="logMethodInterceptor"
-          class="com.hq.cloudplatform.baseframe.utils.log.LogMethodInterceptor"/>
-    <bean class="com.hq.cloudplatform.baseframe.utils.log.LogPointcutAdvisor">
+          class="com.hq.cloudplatform.baseframe.sys.aspect.log.LogMethodInterceptor"/>
+    <bean class="com.hq.cloudplatform.baseframe.sys.aspect.log.LogPointcutAdvisor">
         <constructor-arg name="advice" ref="logMethodInterceptor"/>
         <!-- 只拦截指定的包下的类 -->
         <constructor-arg name="basePackages">
@@ -151,15 +151,15 @@
 
     <!-- 用于支持自定义验证的注解 -->
     <bean id="validationMethodInterceptor"
-          class="com.hq.cloudplatform.baseframe.utils.validation.ValidationMethodInterceptor"/>
-    <bean class="com.hq.cloudplatform.baseframe.utils.validation.ValidationPointcutAdvisor">
+          class="com.hq.cloudplatform.baseframe.sys.aspect.validation.ValidationMethodInterceptor"/>
+    <bean class="com.hq.cloudplatform.baseframe.sys.aspect.validation.ValidationPointcutAdvisor">
         <constructor-arg name="advice" ref="validationMethodInterceptor"/>
     </bean>
 
     <!-- 用于对数据字典的code进行转换 -->
     <bean id="dictionaryTransitionInterceptor"
-          class="com.hq.cloudplatform.baseframe.utils.dictionary.DictionaryTransitionInterceptor"/>
-    <bean class="com.hq.cloudplatform.baseframe.utils.dictionary.DictionaryPointcutAdvisor">
+          class="com.hq.cloudplatform.baseframe.sys.aspect.dictionary.DictionaryTransitionInterceptor"/>
+    <bean class="com.hq.cloudplatform.baseframe.sys.aspect.dictionary.DictionaryPointcutAdvisor">
         <constructor-arg name="advice" ref="dictionaryTransitionInterceptor"/>
         <!--只拦截以find开头命名的方法-->
         <constructor-arg name="methodExpression" value="^find.*"/>

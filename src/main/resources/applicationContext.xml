@@ -19,7 +19,7 @@
     <context:property-placeholder location="classpath:config.properties" ignore-unresolvable="true"/>
 
     <!-- 自动装载的包 -->
-    <context:component-scan base-package="com.hq.cloudplatform.baseframe.mapper"/>
+    <context:component-scan base-package="com.hq.cloudplatform.baseframe.dao"/>
     <context:component-scan base-package="com.hq.cloudplatform.baseframe.service"/>
     <context:component-scan base-package="com.hq.cloudplatform.baseframe.restful"/>
     <context:component-scan base-package="com.hq.cloudplatform.baseframe.sys"/>
@@ -78,7 +78,7 @@
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sessionFactory"/>
-        <property name="basePackage" value="com.hq.cloudplatform.baseframe.mapper"/>
+        <property name="basePackage" value="com.hq.cloudplatform.baseframe.dao"/>
     </bean>
 
     <bean id="mybatisRealm" class="com.hq.cloudplatform.baseframe.sys.realm.MybatisRealm">

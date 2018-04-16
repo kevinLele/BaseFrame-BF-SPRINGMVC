@@ -22,6 +22,7 @@ public interface IBaseRestService<Entity> {
      *
      * @param page
      * @return
+     * @throws ServiceException
      */
     @PostMapping(
             value = "/getPage",
@@ -47,6 +48,7 @@ public interface IBaseRestService<Entity> {
      *
      * @param mapBean
      * @return
+     * @throws ServiceException
      */
     @PostMapping(
             value = "/getByWhere",
@@ -61,6 +63,7 @@ public interface IBaseRestService<Entity> {
      *
      * @param id
      * @return
+     * @throws ServiceException
      */
     @GetMapping(
             value = "/getById",
@@ -74,6 +77,7 @@ public interface IBaseRestService<Entity> {
      *
      * @param name
      * @return
+     * @throws ServiceException
      */
     @GetMapping(
             value = "/getByName",
@@ -87,6 +91,7 @@ public interface IBaseRestService<Entity> {
      *
      * @param mapBean
      * @return
+     * @throws ServiceException
      */
     @PostMapping(
             value = "/isExist",
@@ -101,6 +106,7 @@ public interface IBaseRestService<Entity> {
      *
      * @param id
      * @return
+     * @throws ServiceException
      */
     @GetMapping(
             value = "/removeById",
@@ -114,6 +120,7 @@ public interface IBaseRestService<Entity> {
      *
      * @param idList
      * @return
+     * @throws ServiceException
      */
     @PostMapping(
             value = "/batchRemove",
@@ -128,6 +135,7 @@ public interface IBaseRestService<Entity> {
      *
      * @param id
      * @return
+     * @throws ServiceException
      */
     @GetMapping(
             value = "/removeFromDbById",
@@ -141,6 +149,7 @@ public interface IBaseRestService<Entity> {
      *
      * @param idList
      * @return
+     * @throws ServiceException
      */
     @PostMapping(
             value = "/batchRemoveFromDb",
@@ -154,6 +163,7 @@ public interface IBaseRestService<Entity> {
      *
      * @param mapBean
      * @return
+     * @throws ServiceException
      */
     @PostMapping(
             value = "/removeByWhere",
@@ -168,6 +178,7 @@ public interface IBaseRestService<Entity> {
      *
      * @param entity
      * @return
+     * @throws ServiceException
      */
     @PostMapping(
             value = "/save",
@@ -182,6 +193,7 @@ public interface IBaseRestService<Entity> {
      *
      * @param entity
      * @return
+     * @throws ServiceException
      */
     @PostMapping(
             value = "/modify",
@@ -195,6 +207,7 @@ public interface IBaseRestService<Entity> {
      *
      * @param batchModifyEntity
      * @return
+     * @throws ServiceException
      */
     @PostMapping(
             value = "/batchModify",

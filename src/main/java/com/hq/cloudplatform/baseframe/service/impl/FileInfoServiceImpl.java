@@ -45,7 +45,7 @@ public class FileInfoServiceImpl extends BaseServiceImpl<FileInfo> implements IF
     private StringRedisTemplate redisTemplate;
 
     @Override
-    public BaseDAO<FileInfo> getBaseMapper() {
+    public BaseDAO<FileInfo> getBaseDAO() {
         return fileInfoDAO;
     }
 

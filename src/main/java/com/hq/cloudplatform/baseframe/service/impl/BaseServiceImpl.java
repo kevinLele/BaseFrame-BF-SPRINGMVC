@@ -22,7 +22,7 @@ import java.util.Map;
  */
 public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBaseService<Entity> {
 
-    public abstract BaseDAO<Entity> getBaseMapper();
+    public abstract BaseDAO<Entity> getBaseDAO();
 
     @Override
     public String generateUUID() {
@@ -52,7 +52,7 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
             }
 
             Integer count = SysReflectionUtils.invokeMethodByName(
-                    this.getBaseMapper(),
+                    this.getBaseDAO(),
                     countMapperFunc,
                     Integer.class,
                     new Class[]{Map.class},
@@ -66,7 +66,7 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
             queryParams.put("orderFields", page.getOrderFields());
 
             List rows = SysReflectionUtils.invokeMethodByName(
-                    this.getBaseMapper(),
+                    this.getBaseDAO(),
                     pageMapperFunc,
                     List.class,
                     new Class[]{Map.class},
@@ -96,7 +96,7 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
             }
 
             entity.setCreateDate(new Date());
-            this.getBaseMapper().save(entity);
+            this.getBaseDAO().save(entity);
         } catch (Exception e) {
             throw new ServiceException(e.getMessage(), e);
         }
@@ -118,7 +118,7 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
                 return false;
             }
 
-            this.getBaseMapper().update(entity);
+            this.getBaseDAO().update(entity);
         } catch (Exception e) {
             throw new ServiceException(e.getMessage(), e);
         }
@@ -140,7 +140,7 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
             Map<String, Object> params = BeanObjectToMap.convertBean(entity);
             params.put("idList", idList);
 
-            this.getBaseMapper().batchUpdate(params);
+            this.getBaseDAO().batchUpdate(params);
         } catch (Exception e) {
             throw new ServiceException(e.getMessage(), e);
         }
@@ -159,7 +159,7 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
     @Override
     public boolean deleteByWhere(Map<String, Object> map) throws ServiceException {
         try {
-            this.getBaseMapper().deleteByWhere(map);
+            this.getBaseDAO().deleteByWhere(map);
         } catch (Exception e) {
             throw new ServiceException(e.getMessage(), e);
         }
@@ -174,7 +174,7 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
     @Override
     public boolean deleteById(String id) throws ServiceException {
         try {
-            this.getBaseMapper().deleteById(id);
+            this.getBaseDAO().deleteById(id);
         } catch (Exception e) {
             throw new ServiceException(e.getMessage(), e);
         }
@@ -186,7 +186,7 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
     @Override
     public boolean logicDeleteById(String id) throws ServiceException {
         try {
-            this.getBaseMapper().logicDeleteById(id);
+            this.getBaseDAO().logicDeleteById(id);
         } catch (Exception e) {
             throw new ServiceException(e.getMessage(), e);
         }
@@ -201,7 +201,7 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
     @Override
     public boolean batchDelete(List<String> idList) throws ServiceException {
         try {
-            this.getBaseMapper().batchDelete(idList);
+            this.getBaseDAO().batchDelete(idList);
         } catch (Exception e) {
             throw new ServiceException(e.getMessage(), e);
         }
@@ -213,7 +213,7 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
     @Override
     public boolean logicBatchDelete(List<String> idList) throws ServiceException {
         try {
-            this.getBaseMapper().logicBatchDelete(idList);
+            this.getBaseDAO().logicBatchDelete(idList);
         } catch (Exception e) {
             throw new ServiceException(e.getMessage(), e);
         }
@@ -229,7 +229,7 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
         Entity entity;
 
         try {
-            entity = this.getBaseMapper().findById(id);
+            entity = this.getBaseDAO().findById(id);
         } catch (Exception e) {
             throw new ServiceException(e.getMessage(), e);
         }
@@ -242,7 +242,7 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
         Entity entity;
 
         try {
-            entity = this.getBaseMapper().findByName(name);
+            entity = this.getBaseDAO().findByName(name);
         } catch (Exception e) {
             throw new ServiceException(e.getMessage(), e);
         }
@@ -258,7 +258,7 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
         List<Entity> list;
 
         try {
-            list = this.getBaseMapper().findAll();
+            list = this.getBaseDAO().findAll();
         } catch (Exception e) {
             throw new ServiceException(e.getMessage(), e);
         }
@@ -275,7 +275,7 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
 
         try {
             list = SysReflectionUtils.invokeMethodByName(
-                    this.getBaseMapper(),
+                    this.getBaseDAO(),
                     mapperFunc,
                     List.class,
                     new Class[]{Map.class},

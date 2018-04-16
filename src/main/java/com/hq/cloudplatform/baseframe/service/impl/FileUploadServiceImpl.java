@@ -19,7 +19,7 @@ public class FileUploadServiceImpl extends BaseServiceImpl<UploadFileInfo> imple
     private UploadFileInfoDAO uploadFileInfoDAO;
 
     @Override
-    public BaseDAO<UploadFileInfo> getBaseMapper() {
+    public BaseDAO<UploadFileInfo> getBaseDAO() {
         return uploadFileInfoDAO;
     }
 

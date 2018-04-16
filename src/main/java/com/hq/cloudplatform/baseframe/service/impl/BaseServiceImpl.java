@@ -1,8 +1,8 @@
 package com.hq.cloudplatform.baseframe.service.impl;
 
+import com.hq.cloudplatform.baseframe.dao.BaseDAO;
 import com.hq.cloudplatform.baseframe.entity.BaseEntity;
 import com.hq.cloudplatform.baseframe.exception.ServiceException;
-import com.hq.cloudplatform.baseframe.dao.BaseDAO;
 import com.hq.cloudplatform.baseframe.restful.view.Page;
 import com.hq.cloudplatform.baseframe.service.IBaseService;
 import com.hq.cloudplatform.baseframe.utils.BeanObjectToMap;
@@ -17,9 +17,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Administrator
+ */
 public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBaseService<Entity> {
 
     public abstract BaseDAO<Entity> getBaseMapper();
+
+    @Override
+    public String generateUUID() {
+        return IDGenerator.getID();
+    }
 
     /**
      * 分页查询

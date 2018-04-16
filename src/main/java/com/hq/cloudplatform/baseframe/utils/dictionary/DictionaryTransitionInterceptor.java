@@ -41,16 +41,12 @@ public class DictionaryTransitionInterceptor implements MethodInterceptor {
             if (List.class.isAssignableFrom(returnType)) {
                 List list = (List) result;
 
-                list.forEach(record -> {
-                    transform(record);
-                });
+                list.forEach(record -> transform(record));
             } else if (Page.class.isAssignableFrom(returnType)) {
                 Page page = (Page) result;
                 List list = page.getRows();
 
-                list.forEach(record -> {
-                    transform(record);
-                });
+                list.forEach(record -> transform(record));
             } else {
                 transform(result);
             }

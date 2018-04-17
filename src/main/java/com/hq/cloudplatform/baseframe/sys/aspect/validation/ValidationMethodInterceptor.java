@@ -3,6 +3,7 @@ package com.hq.cloudplatform.baseframe.sys.aspect.validation;
 import com.hq.cloudplatform.baseframe.exception.ServiceException;
 import com.hq.cloudplatform.baseframe.sys.aspect.validation.annotation.ValidationBean;
 import com.hq.cloudplatform.baseframe.sys.aspect.validation.annotation.ValidationField;
+import com.hq.cloudplatform.baseframe.sys.aspect.validation.annotation.ValidationMethod;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.lang.StringUtils;
@@ -27,6 +28,12 @@ public class ValidationMethodInterceptor implements MethodInterceptor {
     public Object invoke(MethodInvocation invocation) throws Throwable {
         // 获取调用方法时传入的参数数组
         Object[] args = invocation.getArguments();
+        ValidationMethod validationMethod = invocation.getMethod().getAnnotation(ValidationMethod.class);
+        boolean isUpdate = false;
+
+        if (null != validationMethod && validationMethod.isUpdate()) {
+            isUpdate = true;
+        }
 
         if (null != args && args.length > 0) {
             for (int i = 0; i < args.length; i++) {
@@ -54,17 +61,18 @@ public class ValidationMethodInterceptor implements MethodInterceptor {
                                 field.setAccessible(true);
                                 Object fieldValue = field.get(arg);
 
-                                if (notNull && (null == fieldValue
-                                        || "".equals(fieldValue.toString()))) {
-                                    throw new ServiceException("字段" + field.getName() + "不允许为空!");
-                                }
+                                if (null == fieldValue || "".equals(fieldValue.toString())) {
+                                    if (!isUpdate && notNull) {
+                                        throw new ServiceException("字段" + field.getName() + "不允许为空!");
+                                    }
+                                } else {
+                                    if (StringUtils.isNotBlank(regex)) {
+                                        Pattern ptn = Pattern.compile(regex);
+                                        Matcher matcher = ptn.matcher(fieldValue.toString());
 
-                                if (StringUtils.isNotBlank(regex)) {
-                                    Pattern ptn = Pattern.compile(regex);
-                                    Matcher matcher = ptn.matcher(fieldValue.toString());
-
-                                    if (!matcher.matches()) {
-                                        throw new ServiceException("字段" + field.getName() + tip + "!");
+                                        if (!matcher.matches()) {
+                                            throw new ServiceException("字段" + field.getName() + tip + "!");
+                                        }
                                     }
                                 }
                             }

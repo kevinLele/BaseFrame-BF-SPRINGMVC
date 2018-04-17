@@ -11,4 +11,11 @@ import java.lang.annotation.*;
 @Documented
 public @interface ValidationMethod {
 
+    /**
+     * 标识是否为”修改“类的方法，方法类的方法不需要进行非空校验
+     * 只需要满足正则表达式的要求即可
+     *
+     * @return
+     */
+    boolean isUpdate() default false;
 }

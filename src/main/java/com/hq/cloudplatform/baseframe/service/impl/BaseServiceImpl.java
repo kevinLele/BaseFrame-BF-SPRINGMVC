@@ -108,14 +108,14 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
      * 修改信息
      */
     @Transactional(rollbackFor = {ServiceException.class})
-    @ValidationMethod
+    @ValidationMethod(isUpdate = true)
     @Override
     public boolean update(Entity entity) throws ServiceException {
         try {
             entity.setUpdateDate(new Date());
 
             if (entity.getId() == null) {
-                return false;
+                throw new ServiceException("Id不允许为空!");
             }
 
             this.getBaseDAO().update(entity);
@@ -127,14 +127,14 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
     }
 
     @Transactional(rollbackFor = {ServiceException.class})
-    @ValidationMethod
+    @ValidationMethod(isUpdate = true)
     @Override
     public boolean batchUpdate(Entity entity, List<String> idList) throws ServiceException {
         try {
             entity.setUpdateDate(new Date());
 
             if (entity == null || idList == null || idList.size() == 0) {
-                return false;
+                throw new ServiceException("IdList列表和Entity不允许为空!");
             }
 
             Map<String, Object> params = BeanObjectToMap.convertBean(entity);

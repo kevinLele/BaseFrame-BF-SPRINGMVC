@@ -1,5 +1,6 @@
 package com.hq.cloudplatform.baseframe.utils.json;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hq.cloudplatform.baseframe.restful.view.User;
@@ -94,6 +95,7 @@ public class JacksonUtil {
      */
     public static String toJSONString(Object object) {
         try {
+            objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
             return objectMapper.writeValueAsString(object);
         } catch (Exception e) {
             log.error("Converting Object to Json string is error!", e);

@@ -146,6 +146,7 @@
         <constructor-arg name="basePackages">
             <list>
                 <value>com.hq.cloudplatform.baseframe.service</value>
+                <value>com.hq.cloudplatform.baseframe.restful</value>
             </list>
         </constructor-arg>
     </bean>

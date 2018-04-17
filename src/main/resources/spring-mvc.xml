@@ -26,19 +26,6 @@
         <property name="resolveLazily" value="true"/>
     </bean>
 
-    <!-- 用于支持自定义操作日志的注解 -->
-    <bean id="logMethodInterceptor"
-          class="com.hq.cloudplatform.baseframe.sys.aspect.log.LogMethodInterceptor"/>
-    <bean class="com.hq.cloudplatform.baseframe.sys.aspect.log.LogPointcutAdvisor">
-        <constructor-arg name="advice" ref="logMethodInterceptor"/>
-        <!-- 只拦截指定的包下的类 -->
-        <constructor-arg name="basePackages">
-            <list>
-                <value>com.hq.cloudplatform.baseframe.restful</value>
-            </list>
-        </constructor-arg>
-    </bean>
-
     <bean id="controllerAspect" class="com.hq.cloudplatform.baseframe.sys.aspect.ControllerAspect"/>
     <aop:config>
         <aop:aspect id="controllerAspect" ref="controllerAspect">

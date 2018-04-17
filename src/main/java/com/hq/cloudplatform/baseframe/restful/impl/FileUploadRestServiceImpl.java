@@ -270,7 +270,7 @@ public class FileUploadRestServiceImpl implements IFileUploadRestService {
     }
 
     private String getFileUrl(String fileId) {
-        int serverPort = request.getServerPort();
+        int serverPort = request.getLocalPort();
         String ServerPath = request.getContextPath();
 
         return fileInfoService.getFileUrlById(fileId, serverPort, ServerPath);

@@ -11,18 +11,25 @@ import java.util.Date;
 public class SnowFlakeId {
 
     /**
-     * 起始的时间戳
+     * 起始的时间戳，当前默认为2017.01.01 北京时间毫秒数
      */
-    private final static long START_STAMP = 1483200000000L; // 2017.01.01 北京时间毫秒数
+    private final static long START_STAMP = 1483200000000L;
+
+    /* ********每一部分占用的位数******** */
+    /**
+     * 序列号占用的位数
+     */
+    private final static int SEQUENCE_BIT = 12;
 
     /**
-     * 每一部分占用的位数
+     * 机器标识占用的位数
      */
-    private final static int SEQUENCE_BIT = 12; //序列号占用的位数
+    private final static int MACHINE_BIT = 5;
 
-    private final static int MACHINE_BIT = 5;  //机器标识占用的位数
-
-    private final static int DATACENTER_BIT = 5;//数据中心占用的位数
+    /**
+     * 数据中心占用的位数
+     */
+    private final static int DATACENTER_BIT = 5;
 
     /**
      * 每一部分的最大值
@@ -42,13 +49,25 @@ public class SnowFlakeId {
 
     private final static int TIMESTAMP_LEFT = DATACENTER_LEFT + DATACENTER_BIT;
 
-    private long datacenterId;  //数据中心
+    /**
+     * 数据中心
+     */
+    private long datacenterId;
 
-    private long machineId;    //机器标识
+    /**
+     * 机器标识
+     */
+    private long machineId;
 
-    private long sequence = 0L; //序列号
+    /**
+     * 序列号
+     */
+    private long sequence = 0L;
 
-    private long lastStamp = -1L;//上一次时间戳
+    /**
+     * 上一次时间戳
+     */
+    private long lastStamp = -1L;
 
     public SnowFlakeId(long datacenterId, long machineId) {
         if (datacenterId > MAX_DATACENTER_NUM || datacenterId < 0) {
@@ -90,10 +109,10 @@ public class SnowFlakeId {
 
         lastStamp = currStmp;
 
-        return (currStmp - START_STAMP) << TIMESTAMP_LEFT //时间戳部分
-                | datacenterId << DATACENTER_LEFT      //数据中心部分
-                | machineId << MACHINE_LEFT            //机器标识部分
-                | sequence;                            //序列号部分
+        return (currStmp - START_STAMP) << TIMESTAMP_LEFT   //时间戳部分
+                | datacenterId << DATACENTER_LEFT           //数据中心部分
+                | machineId << MACHINE_LEFT                 //机器标识部分
+                | sequence;                                 //序列号部分
     }
 
     private long getNextMill() {

@@ -3,12 +3,13 @@ package com.hq.cloudplatform.baseframe.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author Administrator
  */
-public class BaseEntity {
+public class BaseEntity implements Serializable {
 
     @ApiModelProperty(value = "主键ID 字段类型: varchar 长度: 32")
     private String id;

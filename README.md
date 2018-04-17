@@ -31,6 +31,7 @@
 - removeFromDbById      通过ID进行物理删除
 - batchRemoveFromDb     物量批量删除
 - removeByWhere         通过条件进行删除
+- removeByWhereFromDb   通过条件进行逻辑删除
 - save                  保存
 - modify                修改
 - batchModify           批量修改

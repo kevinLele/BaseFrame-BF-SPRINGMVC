@@ -155,6 +155,19 @@ public interface IBaseRestService<Entity> {
      * @return
      */
     @PostMapping(
+            value = "/removeByWhereFromDb",
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "根据传入的参数进行删除操作", notes = "该操作将进行物理删除，如需进行逻辑删除请使用removeById接口")
+    ResultBean<Boolean> removeByWhereFromDb(Map<String, Object> mapBean);
+
+    /**
+     * 根据传入的条件进行删除
+     *
+     * @param mapBean
+     * @return
+     */
+    @PostMapping(
             value = "/removeByWhere",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

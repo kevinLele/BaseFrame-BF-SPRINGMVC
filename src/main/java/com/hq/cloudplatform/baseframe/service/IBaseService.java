@@ -1,6 +1,5 @@
 package com.hq.cloudplatform.baseframe.service;
 
-import com.hq.cloudplatform.baseframe.exception.ServiceException;
 import com.hq.cloudplatform.baseframe.restful.view.Page;
 
 import java.util.List;
@@ -13,29 +12,31 @@ public interface IBaseService<Entity> {
 
     String generateUUID();
 
-    Page findByPage(Page<Entity> page, String countMapperFunc, String pageMapperFunc) throws ServiceException;
+    Page findByPage(Page<Entity> page, String countMapperFunc, String pageMapperFunc);
 
-    String save(Entity entity) throws ServiceException;
+    String save(Entity entity);
 
-    boolean update(Entity entity) throws ServiceException;
+    boolean update(Entity entity);
 
-    boolean batchUpdate(Entity entity, List<String> idList) throws ServiceException;
+    boolean batchUpdate(Entity entity, List<String> idList);
 
-    boolean deleteById(String id) throws ServiceException;
+    boolean deleteById(String id);
 
-    boolean deleteByWhere(Map<String, Object> map) throws ServiceException;
+    boolean deleteByWhere(Map<String, Object> map);
 
-    boolean logicDeleteById(String id) throws ServiceException;
+    boolean logicDeleteByWhere(Map<String, Object> map);
 
-    boolean batchDelete(List<String> idList) throws ServiceException;
+    boolean logicDeleteById(String id);
 
-    boolean logicBatchDelete(List<String> idList) throws ServiceException;
+    boolean batchDelete(List<String> idList);
 
-    Entity findById(String id) throws ServiceException;
+    boolean logicBatchDelete(List<String> idList);
 
-    Entity findByName(String name) throws ServiceException;
+    Entity findById(String id);
 
-    List<Entity> findAll() throws ServiceException;
+    Entity findByName(String name);
 
-    List<Entity> findByMap(Map<String, Object> map, String mapperFunc) throws ServiceException;
+    List<Entity> findAll();
+
+    List<Entity> findByMap(Map<String, Object> map, String mapperFunc);
 }

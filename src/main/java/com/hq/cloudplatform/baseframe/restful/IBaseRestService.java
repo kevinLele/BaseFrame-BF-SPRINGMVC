@@ -55,6 +55,20 @@ public interface IBaseRestService<Entity> {
     ResultBean<List<Entity>> getByWhere(Map<String, Object> mapBean);
 
     /**
+     * 根据传入的对象进行查询
+     *
+     * @param entity
+     * @return
+     */
+    @PostMapping(
+            value = "/getByExample",
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "根据传入的对象进行查询")
+    ResultBean<List<Entity>> getByExample(Entity entity) throws Exception;
+
+
+    /**
      * 根据id查询
      * 只返回查询到的第一条记录
      *

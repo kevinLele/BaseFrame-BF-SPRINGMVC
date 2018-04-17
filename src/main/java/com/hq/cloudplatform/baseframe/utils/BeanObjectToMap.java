@@ -14,7 +14,7 @@ public class BeanObjectToMap {
 
     @SuppressWarnings("rawtypes")
     public static Map<String, Object> convertBean(Object bean) throws Exception {
-        Map<String, Object> returnMap = new HashMap<String, Object>();
+        Map<String, Object> returnMap = new HashMap<>();
 
         if (bean != null) {
             Class type = bean.getClass();

@@ -7,6 +7,7 @@ import com.hq.cloudplatform.baseframe.restful.view.BatchModifyEntity;
 import com.hq.cloudplatform.baseframe.restful.view.Page;
 import com.hq.cloudplatform.baseframe.restful.view.ResultBean;
 import com.hq.cloudplatform.baseframe.service.IBaseService;
+import com.hq.cloudplatform.baseframe.utils.BeanObjectToMap;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,6 +96,12 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
     @Override
     public ResultBean<List<Entity>> getByWhere(@RequestBody Map<String, Object> mapBean) {
         return getByWhere(mapBean, "findByMap");
+    }
+
+    @Override
+    public ResultBean<List<Entity>> getByExample(@RequestBody Entity entity) throws Exception {
+        Map<String, Object> mapBean = BeanObjectToMap.convertBean(entity);
+        return getByWhere(mapBean);
     }
 
     protected ResultBean<List<Entity>> getByWhere(Map<String, Object> mapBean, String mapperFunc) {

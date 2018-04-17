@@ -15,6 +15,8 @@ public interface BaseDAO<Entity> {
 
     void deleteByWhere(Map<String, Object> map);
 
+    void logicDeleteByWhere(Map<String, Object> map);
+
     void deleteById(@Param("id") String id);
 
     void logicDeleteById(@Param("id") String id);

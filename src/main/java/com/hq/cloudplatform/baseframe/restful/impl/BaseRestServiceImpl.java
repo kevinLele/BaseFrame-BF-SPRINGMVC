@@ -192,6 +192,19 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      */
     @Override
     public ResultBean<Boolean> removeByWhere(@RequestBody Map<String, Object> mapBean) {
+        if (mapBean.size() == 0) {
+            throw new CheckException("必须传入相关限定条件!");
+        }
+
+        return ResultBean.successPack(this.getService().logicDeleteByWhere(mapBean));
+    }
+
+    @Override
+    public ResultBean<Boolean> removeByWhereFromDb(@RequestBody Map<String, Object> mapBean) {
+        if (mapBean.size() == 0) {
+            throw new CheckException("必须传入相关限定条件!");
+        }
+
         return ResultBean.successPack(this.getService().deleteByWhere(mapBean));
     }
 

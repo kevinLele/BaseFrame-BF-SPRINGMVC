@@ -5,10 +5,10 @@ import com.hq.cloudplatform.baseframe.entity.BaseEntity;
 import com.hq.cloudplatform.baseframe.exception.ServiceException;
 import com.hq.cloudplatform.baseframe.restful.view.Page;
 import com.hq.cloudplatform.baseframe.service.IBaseService;
+import com.hq.cloudplatform.baseframe.sys.aspect.validation.annotation.ValidationMethod;
 import com.hq.cloudplatform.baseframe.utils.BeanObjectToMap;
 import com.hq.cloudplatform.baseframe.utils.IDGenerator;
 import com.hq.cloudplatform.baseframe.utils.SysReflectionUtils;
-import com.hq.cloudplatform.baseframe.sys.aspect.validation.annotation.ValidationMethod;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +33,7 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
      * 分页查询
      */
     @Override
-    public Page<Entity> findByPage(Page<Entity> page, String countMapperFunc, String pageMapperFunc) throws ServiceException {
+    public Page<Entity> findByPage(Page<Entity> page, String countMapperFunc, String pageMapperFunc) {
         if (page.getStartRowNum() >= page.getEndRowNum()) {
             throw new ServiceException("分页查询时开始行必须小于结束行");
         }
@@ -84,10 +84,10 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
     /**
      * 实现新增
      */
-    @Transactional(rollbackFor = {ServiceException.class})
+    @Transactional(rollbackFor = {Exception.class})
     @ValidationMethod
     @Override
-    public String save(Entity entity) throws ServiceException {
+    public String save(Entity entity) {
         String id = IDGenerator.getID();
 
         try {
@@ -107,10 +107,10 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
     /**
      * 修改信息
      */
-    @Transactional(rollbackFor = {ServiceException.class})
+    @Transactional(rollbackFor = {Exception.class})
     @ValidationMethod(isUpdate = true)
     @Override
-    public boolean update(Entity entity) throws ServiceException {
+    public boolean update(Entity entity) {
         try {
             entity.setUpdateDate(new Date());
 
@@ -126,10 +126,10 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
         return true;
     }
 
-    @Transactional(rollbackFor = {ServiceException.class})
+    @Transactional(rollbackFor = {Exception.class})
     @ValidationMethod(isUpdate = true)
     @Override
-    public boolean batchUpdate(Entity entity, List<String> idList) throws ServiceException {
+    public boolean batchUpdate(Entity entity, List<String> idList) {
         try {
             entity.setUpdateDate(new Date());
 
@@ -155,11 +155,23 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
      * @return
      * @throws ServiceException
      */
-    @Transactional(rollbackFor = {ServiceException.class})
+    @Transactional(rollbackFor = {Exception.class})
     @Override
-    public boolean deleteByWhere(Map<String, Object> map) throws ServiceException {
+    public boolean deleteByWhere(Map<String, Object> map) {
         try {
             this.getBaseDAO().deleteByWhere(map);
+        } catch (Exception e) {
+            throw new ServiceException(e.getMessage(), e);
+        }
+
+        return true;
+    }
+
+    @Transactional(rollbackFor = {Exception.class})
+    @Override
+    public boolean logicDeleteByWhere(Map<String, Object> map) {
+        try {
+            this.getBaseDAO().logicDeleteByWhere(map);
         } catch (Exception e) {
             throw new ServiceException(e.getMessage(), e);
         }
@@ -170,9 +182,9 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
     /**
      * 通过id删除
      */
-    @Transactional(rollbackFor = {ServiceException.class})
+    @Transactional(rollbackFor = {Exception.class})
     @Override
-    public boolean deleteById(String id) throws ServiceException {
+    public boolean deleteById(String id) {
         try {
             this.getBaseDAO().deleteById(id);
         } catch (Exception e) {
@@ -182,9 +194,9 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
         return true;
     }
 
-    @Transactional(rollbackFor = {ServiceException.class})
+    @Transactional(rollbackFor = {Exception.class})
     @Override
-    public boolean logicDeleteById(String id) throws ServiceException {
+    public boolean logicDeleteById(String id) {
         try {
             this.getBaseDAO().logicDeleteById(id);
         } catch (Exception e) {
@@ -197,9 +209,9 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
     /**
      * 批量删除
      */
-    @Transactional(rollbackFor = {ServiceException.class})
+    @Transactional(rollbackFor = {Exception.class})
     @Override
-    public boolean batchDelete(List<String> idList) throws ServiceException {
+    public boolean batchDelete(List<String> idList) {
         try {
             this.getBaseDAO().batchDelete(idList);
         } catch (Exception e) {
@@ -209,9 +221,9 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
         return true;
     }
 
-    @Transactional(rollbackFor = {ServiceException.class})
+    @Transactional(rollbackFor = {Exception.class})
     @Override
-    public boolean logicBatchDelete(List<String> idList) throws ServiceException {
+    public boolean logicBatchDelete(List<String> idList) {
         try {
             this.getBaseDAO().logicBatchDelete(idList);
         } catch (Exception e) {
@@ -225,7 +237,7 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
      * 通过id查询
      */
     @Override
-    public Entity findById(String id) throws ServiceException {
+    public Entity findById(String id) {
         Entity entity;
 
         try {
@@ -238,7 +250,7 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
     }
 
     @Override
-    public Entity findByName(String name) throws ServiceException {
+    public Entity findByName(String name) {
         Entity entity;
 
         try {
@@ -254,7 +266,7 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
      * 查询所有信息
      */
     @Override
-    public List<Entity> findAll() throws ServiceException {
+    public List<Entity> findAll() {
         List<Entity> list;
 
         try {
@@ -270,7 +282,7 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
      * 根据不同的条件查询
      */
     @Override
-    public List<Entity> findByMap(Map<String, Object> map, String mapperFunc) throws ServiceException {
+    public List<Entity> findByMap(Map<String, Object> map, String mapperFunc) {
         List<Entity> list;
 
         try {

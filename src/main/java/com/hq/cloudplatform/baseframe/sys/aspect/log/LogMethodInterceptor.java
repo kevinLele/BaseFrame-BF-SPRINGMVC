@@ -25,13 +25,25 @@ public class LogMethodInterceptor implements MethodInterceptor {
     @Lazy
     private HttpServletRequest request;
 
+    private String type;
+
     @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {
+        String startMark = "service".equals(type) ?
+                "--------------------------->>>" : "===========================>>>";
+        String endMark = "service".equals(type) ?
+                "---------------------------<<<" : "===========================<<<";
+
+        log.info(startMark);
         printMethodParams(invocation.getThis().getClass(),
                 invocation.getMethod(),
                 invocation.getArguments());
 
-        return invocation.proceed();
+        Object result = invocation.proceed();
+        log.info("return {}", JacksonUtil.toJSONString(result));
+        log.info(endMark);
+
+        return result;
     }
 
     /**
@@ -46,11 +58,9 @@ public class LogMethodInterceptor implements MethodInterceptor {
         String[] paramNames = getFieldsName(method);
 
         //定义目标类的日志
-        log.info("-------------------------------");
         log.info("clsName = {}", cls.getName());
         log.info("methodName = {}", method.getName());
         logParam(log, paramNames, args);
-        log.info("-------------------------------");
     }
 
     /**
@@ -115,5 +125,13 @@ public class LogMethodInterceptor implements MethodInterceptor {
         } else {
             return false;
         }
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

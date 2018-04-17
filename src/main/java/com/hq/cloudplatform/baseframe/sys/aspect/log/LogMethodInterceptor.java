@@ -45,7 +45,7 @@ public class LogMethodInterceptor implements MethodInterceptor {
                 invocation.getArguments());
 
         Object result = invocation.proceed();
-        log.info("return {}", JacksonUtil.toJSONString(result));
+        log.info("return : {}", JacksonUtil.toJSONString(result));
         log.info(endMark);
 
         return result;
@@ -63,9 +63,9 @@ public class LogMethodInterceptor implements MethodInterceptor {
         String[] paramNames = getFieldsName(method);
 
         //定义目标类的日志
-        log.info("clsName = {}", cls.getName());
-        log.info("methodName = {}", method.getName());
-        logParam(log, paramNames, args);
+        log.info("class : {}", cls.getName());
+        log.info("method : {}", method.getName());
+        log.info("parameter : {}", paramInfo(paramNames, args));
     }
 
     /**
@@ -87,10 +87,9 @@ public class LogMethodInterceptor implements MethodInterceptor {
      * @param paramsArgsName  方法参数名数组
      * @param paramsArgsValue 方法参数值数组
      */
-    private void logParam(Logger log, String[] paramsArgsName, Object[] paramsArgsValue) {
+    private String paramInfo(String[] paramsArgsName, Object[] paramsArgsValue) {
         if (ArrayUtils.isEmpty(paramsArgsName) || ArrayUtils.isEmpty(paramsArgsValue)) {
-            log.info("该方法没有参数");
-            return;
+            return "该方法没有参数";
         }
 
         StringBuffer buffer = new StringBuffer();
@@ -115,7 +114,7 @@ public class LogMethodInterceptor implements MethodInterceptor {
             buffer.deleteCharAt(buffer.length() - 1);
         }
 
-        log.info(buffer.toString());
+        return buffer.toString();
     }
 
     /**

@@ -141,7 +141,11 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      */
     @Override
     public ResultBean<Boolean> removeById(@RequestParam("id") String id) {
-        return ResultBean.successPack(this.getService().logicDeleteById(id));
+        if (StringUtils.isNotBlank(id)) {
+            return ResultBean.successPack(this.getService().logicDeleteById(id));
+        } else {
+            throw new CheckException("id can't be null!");
+        }
     }
 
     /**
@@ -170,8 +174,12 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
      */
     @Override
     public ResultBean<Boolean> removeFromDbById(@RequestParam("id") String id) {
-        //物理删除
-        return ResultBean.successPack(this.getService().deleteById(id));
+        if (StringUtils.isNotBlank(id)) {
+            //物理删除
+            return ResultBean.successPack(this.getService().deleteById(id));
+        } else {
+            throw new CheckException("id can't be null!");
+        }
     }
 
     @Override

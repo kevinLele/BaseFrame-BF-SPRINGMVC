@@ -25,10 +25,15 @@ public class LogMethodInterceptor implements MethodInterceptor {
     @Lazy
     private HttpServletRequest request;
 
-    private String type;
-
     @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {
+        String className = invocation.getThis().getClass().getName();
+        String type = "restful";
+
+        if (className.indexOf(type) == -1) {
+            type = "service";
+        }
+
         String startMark = "service".equals(type) ?
                 "--------------------------->>>" : "===========================>>>";
         String endMark = "service".equals(type) ?
@@ -125,13 +130,5 @@ public class LogMethodInterceptor implements MethodInterceptor {
         } else {
             return false;
         }
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 }

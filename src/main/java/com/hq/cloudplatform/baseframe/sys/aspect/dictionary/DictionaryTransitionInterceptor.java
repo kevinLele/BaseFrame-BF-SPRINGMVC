@@ -73,12 +73,24 @@ public class DictionaryTransitionInterceptor implements MethodInterceptor {
                             //如果是String类型的属性则直接进行转换
                             if (field.getType().isAssignableFrom(String.class)) {
                                 transformField(field, obj);
-                            } else { //Bean类型的属性则需要对该bean的所有属性进行遍历,逐个属性进行转换处理
+                            }
+                            //Bean类型的属性则需要对该bean的所有属性进行遍历,逐个属性进行转换处理
+                            else {
                                 field.setAccessible(true);
-                                Object bean = field.get(obj);
+                                Object fieldValue = field.get(obj);
 
-                                if (null != bean) {
-                                    transform(bean);
+                                //如果是列表类型的属性则进行遍历处理
+                                if (List.class.isAssignableFrom(fieldValue.getClass())) {
+                                    List list = (List) fieldValue;
+
+                                    list.forEach(record -> transform(record));
+                                } else if (Page.class.isAssignableFrom(fieldValue.getClass())) {
+                                    Page page = (Page) fieldValue;
+                                    List list = page.getRows();
+
+                                    list.forEach(record -> transform(record));
+                                } else {
+                                    transform(fieldValue);
                                 }
                             }
                         } catch (IllegalAccessException e) {

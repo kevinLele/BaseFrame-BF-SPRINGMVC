@@ -3,6 +3,9 @@ package com.hq.cloudplatform.baseframe.restful.view;
 
 import com.hq.cloudplatform.baseframe.entity.BaseEntity;
 
+/**
+ * @author Administrator
+ */
 public class Organization extends BaseEntity {
 
     private Long parentId;

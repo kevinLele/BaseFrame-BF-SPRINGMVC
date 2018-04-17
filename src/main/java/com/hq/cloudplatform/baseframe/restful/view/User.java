@@ -8,6 +8,9 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author Administrator
+ */
 @ApiModel(value = "user对象", description = "用户对象user")
 public class User extends BaseEntity {
 

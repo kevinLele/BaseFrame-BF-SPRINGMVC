@@ -3,7 +3,9 @@ package com.hq.cloudplatform.baseframe.restful.view;
 import com.hq.cloudplatform.baseframe.entity.BaseEntity;
 
 /**
- * Created by Administrator on 2017/3/10.
+ *
+ * @author Administrator
+ * @date 2017/3/10
  * 权限属性表实体类
  */
 public class Permission extends BaseEntity {

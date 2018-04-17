@@ -6,6 +6,7 @@ import java.util.List;
  * 用于进行批量修改的实体Bean
  *
  * @param <Entity>
+ * @author Administrator
  */
 public class BatchModifyEntity<Entity> {
 

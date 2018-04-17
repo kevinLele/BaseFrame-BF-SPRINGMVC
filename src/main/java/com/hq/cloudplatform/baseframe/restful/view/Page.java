@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Administrator
+ */
 public class Page<Entity> implements Serializable {
 
     /**

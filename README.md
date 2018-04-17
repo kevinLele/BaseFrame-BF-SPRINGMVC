@@ -17,3 +17,20 @@
 >- 分页查询
 >- Spring rest Template的集成，方便后台向第三方服务发送restful请求
 >- 文件上传下载的接口集成，上传时支持秒传以及断点续传，下载时支持图片以及中文文件名
+
+
+### BaseRestService提供的接口
+- getPage               分页查询
+- getAll                查询所有
+- getByWhere            通过条件查询
+- getById               通过主键ID查询
+- getByName             通过名称查询
+- isExist               通过条件判断是否存在
+- removeById            通过ID进行逻辑删除
+- batchRemove           逻辑批量删除
+- removeFromDbById      通过ID进行物理删除
+- batchRemoveFromDb     物量批量删除
+- removeByWhere         通过条件进行删除
+- save                  保存
+- modify                修改
+- batchModify           批量修改

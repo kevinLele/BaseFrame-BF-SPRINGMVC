@@ -44,18 +44,20 @@ public class SysRestServiceImpl implements ISysRestService {
         //模拟登陆
         HttpSession session = request.getSession();
 
-        ResultBean jsonObj = restTemplate.getForObject(
+        ResultBean resultBean = restTemplate.getForObject(
                 RestUtils.getCAServerUrl("/public/user/getByLoginName?loginName={loginName}"),
                 ResultBean.class, user.getLoginName());
 
-        user = JacksonUtil.parseObject(jsonObj.getContentAsStr(), User.class);
-        session.setAttribute(Constants.SESSION_KEY_USER, user);
+        if (ResultBean.SUCCESS.equals(resultBean.getStatus())) {
+            user = JacksonUtil.parseObject(resultBean.getContentAsStr(), User.class);
+            session.setAttribute(Constants.SESSION_KEY_USER, user);
 
-        Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken token = new UsernamePasswordToken(user.getLoginName(), "");
-        subject.login(token);
+            Subject subject = SecurityUtils.getSubject();
+            UsernamePasswordToken token = new UsernamePasswordToken(user.getLoginName(), "");
+            subject.login(token);
+        }
 
-        return ResultBean.successPack(user);
+        return resultBean;
     }
 
     @Override

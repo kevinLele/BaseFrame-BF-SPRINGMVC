@@ -26,6 +26,7 @@
         <property name="resolveLazily" value="true"/>
     </bean>
 
+    <!-- 自定义controller层的切面，完成统一的异常处理并将异常转换为ResultBean返回 -->
     <bean id="controllerAspect" class="com.hq.cloudplatform.baseframe.sys.aspect.ControllerAspect"/>
     <aop:config>
         <aop:aspect id="controllerAspect" ref="controllerAspect">
@@ -42,6 +43,7 @@
                 <property name="objectMapper">
                     <bean class="com.fasterxml.jackson.databind.ObjectMapper">
                         <property name="dateFormat">
+                            <!--配置JSON转换时所使用的时间格式-->
                             <bean class="java.text.SimpleDateFormat">
                                 <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss"></constructor-arg>
                             </bean>
@@ -54,17 +56,16 @@
 
     <!-- enable autowire 向容器自动注册 -->
     <context:annotation-config/>
+    <context:component-scan base-package="com.hq.cloudplatform.baseframe.restful"/>
 
     <!-- 使用cglib进行动态代理 -->
     <!-- proxy-target-class:为true表示基于类进行代理，否则只支持接口方式的代理 -->
     <!-- expose-proxy: 开启暴露Aop代理到ThreadLocal支持,即可以通过AopContext.currentProxy()获取当前代理对象 -->
     <aop:aspectj-autoproxy proxy-target-class="true" expose-proxy="true"/>
 
-    <context:component-scan base-package="com.hq.cloudplatform.baseframe.restful"/>
+    <!-- Swagger 配置 -->
+    <mvc:resources mapping="/swagger-ui.html" location="classpath:/META-INF/resources/"/>
+    <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
 
     <mvc:default-servlet-handler/>
-
-    <mvc:resources mapping="/swagger-ui.html" location="classpath:/META-INF/resources/"/>
-
-    <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
 </beans>

@@ -2,6 +2,8 @@ package com.hq.cloudplatform.baseframe.entity;
 
 import com.hq.cloudplatform.baseframe.sys.aspect.validation.annotation.ValidationBean;
 
+import java.util.Map;
+
 /**
  * @author Administrator
  * @date 7/24/2017
@@ -22,6 +24,8 @@ public class FileInfo extends BaseEntity {
      * 文件的URL地址
      */
     private String url;
+
+    private Map<String, Object> attachParams;
 
     /**
      * 对应到上传文件的相关信息

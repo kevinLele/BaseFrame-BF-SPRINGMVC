@@ -1,5 +1,7 @@
 package com.hq.cloudplatform.baseframe.entity;
 
+import java.util.Map;
+
 /**
  * 分片上传的文件信息
  *
@@ -18,6 +20,8 @@ public class ChunkFileInfo {
     private Long chunkSize;
 
     private String fileType;
+
+    private Map<String, Object> attachParams;
 
     public String getFileName() {
         return fileName;
@@ -65,5 +69,13 @@ public class ChunkFileInfo {
 
     public void setFileType(String fileType) {
         this.fileType = fileType;
+    }
+
+    public Map<String, Object> getAttachParams() {
+        return attachParams;
+    }
+
+    public void setAttachParams(Map<String, Object> attachParams) {
+        this.attachParams = attachParams;
     }
 }

@@ -8,6 +8,14 @@
     <name>BaseFrame Maven Webapp</name>
     <url>http://maven.apache.org</url>
 
+    <repositories>
+        <repository>
+            <id>Ztemap_Repository</id>
+            <name>Nexus_repos</name>
+            <url>http://192.168.1.210:8081/nexus/content/groups/public/</url>
+        </repository>
+    </repositories>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <lombok.version>1.16.10</lombok.version>

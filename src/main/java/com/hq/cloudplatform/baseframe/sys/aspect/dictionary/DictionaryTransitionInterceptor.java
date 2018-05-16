@@ -80,18 +80,20 @@ public class DictionaryTransitionInterceptor implements MethodInterceptor {
                                 field.setAccessible(true);
                                 Object fieldValue = field.get(obj);
 
-                                //如果是列表类型的属性则进行遍历处理
-                                if (List.class.isAssignableFrom(fieldValue.getClass())) {
-                                    List list = (List) fieldValue;
+                                if(null != fieldValue){
+                                    //如果是列表类型的属性则进行遍历处理
+                                    if (List.class.isAssignableFrom(fieldValue.getClass())) {
+                                        List list = (List) fieldValue;
 
-                                    list.forEach(record -> transform(record));
-                                } else if (Page.class.isAssignableFrom(fieldValue.getClass())) {
-                                    Page page = (Page) fieldValue;
-                                    List list = page.getRows();
+                                        list.forEach(record -> transform(record));
+                                    } else if (Page.class.isAssignableFrom(fieldValue.getClass())) {
+                                        Page page = (Page) fieldValue;
+                                        List list = page.getRows();
 
-                                    list.forEach(record -> transform(record));
-                                } else {
-                                    transform(fieldValue);
+                                        list.forEach(record -> transform(record));
+                                    } else {
+                                        transform(fieldValue);
+                                    }
                                 }
                             }
                         } catch (IllegalAccessException e) {
@@ -106,7 +108,24 @@ public class DictionaryTransitionInterceptor implements MethodInterceptor {
     private void transformField(Field field, Object obj) {
         //标识为需要进行数据字典转换的属性
         DictionaryField dictionaryField = field.getDeclaredAnnotation(DictionaryField.class);
-        String parentCode = dictionaryField.value();
+        String parentCode = "";
+
+        if (dictionaryField.isDynamicParentCode()
+                && StringUtils.isNotBlank(dictionaryField.dynamicCodeField())) {
+            try {
+                Field dynamicCodeField = obj.getClass().getDeclaredField(dictionaryField.dynamicCodeField());
+                dynamicCodeField.setAccessible(true);
+                parentCode = (String) dynamicCodeField.get(obj);
+            } catch (NoSuchFieldException e) {
+                log.error("配置错误，未知的field:{}", dictionaryField.dynamicCodeField());
+                return;
+            } catch (IllegalAccessException e) {
+                log.error("数据字典转换失败", e);
+                return;
+            }
+        } else {
+            parentCode = dictionaryField.value();
+        }
 
         //设置为允许访问私有属性
         field.setAccessible(true);

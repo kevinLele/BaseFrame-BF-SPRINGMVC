@@ -10,6 +10,7 @@ import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
 
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -96,6 +97,14 @@ public interface IWorkflowService {
     String getBusinessKey(String taskId) throws ServiceException;
 
     /**
+     * 获取流程定义的ID
+     * @param processInstanceId
+     * @return
+     * @throws ServiceException
+     */
+    String getProcessDefinitionId(String processInstanceId) throws ServiceException;
+
+    /**
      * 通过任务ID获取该任务所在的工作流程的所有批注信息
      *
      * @param taskId
@@ -104,4 +113,15 @@ public interface IWorkflowService {
     List<Comment> getCommentListByTaskId(String taskId) throws ServiceException;
 
     WorkflowProcessInfo getWorkflowProcessInfo(String type);
+
+    /**
+     * 流程跟踪（即查看流程已执行到哪一步）
+     *
+     * @param processDefinitionId
+     * @param executionId
+     * @param out
+     * @throws ServiceException
+     */
+    void processTracking(String processDefinitionId,
+                         String executionId, OutputStream out) throws ServiceException;
 }

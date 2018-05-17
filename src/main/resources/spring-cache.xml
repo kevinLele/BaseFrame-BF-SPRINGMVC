@@ -7,10 +7,10 @@
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
 
-    <cache:annotation-driven cache-manager="RedisCacheManager" proxy-target-class="true"/>
+    <cache:annotation-driven cache-manager="redisCacheManager" proxy-target-class="true"/>
 
     <!-- generic cache manager -->
-    <bean id="SimpleCacheManager"
+    <bean id="simpleCacheManager"
           class="org.springframework.cache.support.SimpleCacheManager">
         <property name="caches">
             <set>
@@ -23,7 +23,7 @@
     </bean>
 
     <!-- 配置使用Redis做为缓存服务器 -->
-    <bean id="RedisCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
+    <bean id="redisCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
         <constructor-arg ref="redisTemplate"/>
     </bean>
 </beans>

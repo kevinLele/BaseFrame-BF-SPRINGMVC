@@ -136,8 +136,8 @@
     <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor"
           p:securityManager-ref="securityManager"/>
 
-    <!-- 用于支持自定义操作日志的注解 -->
-    <bean id="logMethodInterceptor" class="com.hq.cloudplatform.baseframe.sys.aspect.log.LogMethodInterceptor" />
+    <!-- 用于打印相关方法调用日志信息，方便开发人员定位问题，生产环境应注释掉此切面 -->
+    <bean id="logMethodInterceptor" class="com.hq.cloudplatform.baseframe.sys.aspect.log.LogMethodInterceptor"/>
     <bean class="com.hq.cloudplatform.baseframe.sys.aspect.log.LogPointcutAdvisor">
         <constructor-arg name="advice" ref="logMethodInterceptor"/>
         <!-- 只拦截指定的包下的类 -->

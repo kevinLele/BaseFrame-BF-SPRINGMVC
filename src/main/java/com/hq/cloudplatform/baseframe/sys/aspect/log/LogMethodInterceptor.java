@@ -1,6 +1,5 @@
 package com.hq.cloudplatform.baseframe.sys.aspect.log;
 
-import com.hq.cloudplatform.baseframe.exception.JsonParseException;
 import com.hq.cloudplatform.baseframe.utils.json.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.MethodInterceptor;

@@ -45,14 +45,7 @@ public class LogMethodInterceptor implements MethodInterceptor {
                 invocation.getArguments());
 
         Object result = invocation.proceed();
-
-        try {
-            log.info("return : {}", JacksonUtil.toJSONString(result));
-        } catch (JsonParseException e) {
-            // 序列化为Json格式失败时则直接打印对象的类型
-            log.info("return : {}", result);
-        }
-
+        log.info("return : {}", toJSONString(result));
         log.info(endMark);
 
         return result;
@@ -112,7 +105,7 @@ public class LogMethodInterceptor implements MethodInterceptor {
             if (isPrimite(value.getClass())) {
                 buffer.append(value + "  ,");
             } else {
-                buffer.append(JacksonUtil.toJSONString(value) + "  ,");
+                buffer.append(toJSONString(value) + "  ,");
             }
         }
 
@@ -135,6 +128,14 @@ public class LogMethodInterceptor implements MethodInterceptor {
             return true;
         } else {
             return false;
+        }
+    }
+
+    private String toJSONString(Object object) {
+        try {
+            return JacksonUtil.toJSONString(object);
+        } catch (Exception e) {
+            return String.valueOf(object);
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.hq.cloudplatform.baseframe.sys.aspect.log;
 
+import com.hq.cloudplatform.baseframe.exception.JsonParseException;
 import com.hq.cloudplatform.baseframe.utils.json.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.MethodInterceptor;
@@ -44,7 +45,14 @@ public class LogMethodInterceptor implements MethodInterceptor {
                 invocation.getArguments());
 
         Object result = invocation.proceed();
-        log.info("return : {}", JacksonUtil.toJSONString(result));
+
+        try {
+            log.info("return : {}", JacksonUtil.toJSONString(result));
+        } catch (JsonParseException e) {
+            // 序列化为Json格式失败时则直接打印对象的类型
+            log.info("return : {}", result);
+        }
+
         log.info(endMark);
 
         return result;

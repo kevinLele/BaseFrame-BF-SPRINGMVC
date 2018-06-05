@@ -3,6 +3,7 @@ package com.hq.cloudplatform.baseframe.restful.view;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hq.cloudplatform.baseframe.utils.json.JacksonUtil;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * restful对外的JSON 对象封装
@@ -145,8 +146,12 @@ public class ResultBean<Entity> {
     public static <Entity> ResultBean failPack(Exception e) {
         ResultBean<Entity> resultBean = new ResultBean<>();
         String message = e.getMessage();
-        int index = message.indexOf(":");
-        resultBean.setMessage(index == -1 ? message : message.substring(index + 1));
+
+        if(StringUtils.isNotBlank(message)){
+            int index = message.indexOf(":");
+            resultBean.setMessage(index == -1 ? message : message.substring(index + 1));
+        }
+
         resultBean.setStatus(FAIL);
 
         return resultBean;

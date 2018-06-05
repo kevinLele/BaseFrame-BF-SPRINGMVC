@@ -24,28 +24,41 @@ public class LogMethodInterceptor implements MethodInterceptor {
     @Lazy
     private HttpServletRequest request;
 
+    private ThreadLocal<Integer> level = ThreadLocal.withInitial(() -> 1);
+
+    private ThreadLocal<StringBuffer> logs = ThreadLocal.withInitial(() -> new StringBuffer());
+
+    private void printInfo(String info) {
+        String format = String.format("%%%ds%%s", level.get() * 2);
+        logs.get().append(String.format(format, "", info)).append(System.lineSeparator());
+    }
+
     @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {
-        String className = invocation.getThis().getClass().getName();
-        String type = "restful";
+        int levelNum = level.get();
+        printInfo("{");
 
-        if (className.indexOf(type) == -1) {
-            type = "service";
-        }
-
-        String startMark = "service".equals(type) ?
-                "--------------------------->>>" : "===========================>>>";
-        String endMark = "service".equals(type) ?
-                "---------------------------<<<" : "===========================<<<";
-
-        log.info(startMark);
+        level.set(++levelNum);
         printMethodParams(invocation.getThis().getClass(),
                 invocation.getMethod(),
                 invocation.getArguments());
 
+        level.set(++levelNum);
         Object result = invocation.proceed();
-        log.info("return : {}", toJSONString(result));
-        log.info(endMark);
+        level.set(--levelNum);
+
+        printInfo(String.format("return : %s", toJSONString(result)));
+        level.set(--levelNum);
+        printInfo("}");
+
+        if (levelNum == 1) {
+            log.info("Thread:{}{}{}", Thread.currentThread().getName(),
+                    System.lineSeparator(),
+                    logs.get().toString());
+
+            //线程池的线程会被重用，所以需要手动重置
+            logs.set(new StringBuffer());
+        }
 
         return result;
     }
@@ -62,9 +75,9 @@ public class LogMethodInterceptor implements MethodInterceptor {
         String[] paramNames = getFieldsName(method);
 
         //定义目标类的日志
-        log.info("class : {}", cls.getName());
-        log.info("method : {}", method.getName());
-        log.info("parameter : {}", paramInfo(paramNames, args));
+        printInfo(String.format("class : %s", cls.getName()));
+        printInfo(String.format("method : %s", method.getName()));
+        printInfo(String.format("parameter : %s", paramInfo(paramNames, args)));
     }
 
     /**

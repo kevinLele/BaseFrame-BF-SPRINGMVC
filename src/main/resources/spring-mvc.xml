@@ -42,6 +42,9 @@
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                 <property name="objectMapper">
                     <bean class="com.fasterxml.jackson.databind.ObjectMapper">
+                        <property name="serializationInclusion">
+                            <value type="com.fasterxml.jackson.annotation.JsonInclude.Include">NON_NULL</value>
+                        </property>
                         <property name="dateFormat">
                             <!--配置JSON转换时所使用的时间格式-->
                             <bean class="java.text.SimpleDateFormat">

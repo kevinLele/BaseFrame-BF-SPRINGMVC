@@ -15,6 +15,28 @@
       <charset>UTF-8</charset>
     </encoder>
   </appender>
+
+  <!-- 按照每天生成日志文件 -->
+  <appender name="service_visit" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>logs/visit.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <!-- rollover daily -->
+      <fileNamePattern>logs/visit-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+      <!-- each file should be at most 100MB, keep 60 days worth of history, but at most 20GB -->
+      <maxFileSize>100MB</maxFileSize>
+      <maxHistory>60</maxHistory>
+      <totalSizeCap>20GB</totalSizeCap>
+    </rollingPolicy>
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+      <pattern>%msg%n</pattern>
+      <charset>UTF-8</charset>
+    </encoder>
+  </appender>
+
+  <logger name="com.john.service" level="INFO" additivity="false">
+    <appender-ref ref="service_visit"/>
+  </logger>
   
   <logger name="com.hq.cloudplatform.baseframe" level="debug"/>
   

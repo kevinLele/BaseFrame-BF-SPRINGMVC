@@ -53,7 +53,6 @@ public class InstantiationTracingBeanPostProcessor implements ApplicationListene
 
         log.info("文件上传模块正式文件存储目录为:" + prodDir.getAbsolutePath());
 
-
         //启动Redis的情况下
         if (Constants.USE_REDIS) {
             log.info("初始化Redis服务...");
@@ -65,7 +64,6 @@ public class InstantiationTracingBeanPostProcessor implements ApplicationListene
                 uploadFileInfoList.forEach(fileInfo -> {
                     ops.put(fileInfo.getKey(), "uploadFileId", fileInfo.getId());
                 });
-
 
                 log.info("Redis服务初始化完成");
             } catch (RedisConnectionFailureException redisConnectionException) {

@@ -138,7 +138,7 @@ public class FileUploadRestServiceImpl implements IFileUploadRestService {
     public String uploadChunk(@RequestParam("file") MultipartFile filePart,
                               @RequestParam("name") String fileName,
                               @RequestParam("chunk") String chunk,
-                              @RequestParam("size") String fileSize,
+                              @RequestParam("fileSize") String fileSize,
                               @RequestParam("fileMd5") String fileMd5,
                               @RequestParam("percent") String percent) {
         String fileKey = fileInfoService.generateKey(fileName, fileMd5, fileSize);
@@ -147,7 +147,7 @@ public class FileUploadRestServiceImpl implements IFileUploadRestService {
             File tempDir = new File(Constants.UPLOADER_TEMP_DIR, fileKey);
 
             if (!tempDir.exists()) {
-                tempDir.mkdir();
+                tempDir.mkdirs();
             }
 
             //把表单内容转换成流

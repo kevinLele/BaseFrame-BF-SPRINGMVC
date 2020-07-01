@@ -28,7 +28,7 @@
         <aspectj.version>1.7.4</aspectj.version>
         <jersey.version>2.24</jersey.version>
         <ojdbc6.version>11.2.0.4</ojdbc6.version>
-        <mysql.version>5.1.27</mysql.version>
+        <mysql.version>8.0.16</mysql.version>
         <commons-lang.version>2.6</commons-lang.version>
         <commons-beanutils.version>1.9.3</commons-beanutils.version>
         <mybatis.version>3.2.8</mybatis.version>

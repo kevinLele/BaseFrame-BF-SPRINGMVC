@@ -33,7 +33,7 @@
         <commons-beanutils.version>1.9.3</commons-beanutils.version>
         <mybatis.version>3.2.8</mybatis.version>
         <mybatis-spring.version>1.2.2</mybatis-spring.version>
-        <shiro.version>1.2.4</shiro.version>
+        <shiro.version>1.8.0</shiro.version>
         <mongo-driver.version>3.4.2</mongo-driver.version>
         <spring-data-mongodb.version>1.10.1.RELEASE</spring-data-mongodb.version>
         <redis-clients.version>2.9.0</redis-clients.version>
